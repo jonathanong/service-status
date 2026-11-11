@@ -1,0 +1,33 @@
+{
+  "name": "service-status",
+  "version": "0.1.0",
+  "description": "Recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply from Codex.",
+  "author": {
+    "name": "Jonathan Ong",
+    "url": "https://github.com/jonathanong"
+  },
+  "homepage": "https://github.com/jonathanong/service-status",
+  "repository": "https://github.com/jonathanong/service-status",
+  "license": "MIT",
+  "keywords": ["outage", "status", "statuspage", "incident", "codex"],
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
+  "interface": {
+    "displayName": "service-status",
+    "shortDescription": "Know when it's them, not you",
+    "longDescription": "When a git, gh, package-manager or API call fails like an outage, check the provider's status page with a minimal fetch before changing any code.",
+    "developerName": "Jonathan Ong",
+    "category": "Coding",
+    "capabilities": ["Read"],
+    "websiteURL": "https://github.com/jonathanong/service-status",
+    "privacyPolicyURL": "https://github.com/jonathanong/service-status",
+    "termsOfServiceURL": "https://github.com/jonathanong/service-status",
+    "defaultPrompt": [
+      "Is GitHub down?",
+      "Check whether npm is having an incident",
+      "Why did git push fail with a 503?"
+    ],
+    "brandColor": "#16A34A",
+    "screenshots": []
+  }
+}

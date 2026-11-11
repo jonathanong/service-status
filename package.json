@@ -1,0 +1,28 @@
+{
+  "name": "service-status",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tell coding agents when a failure is a third-party outage, not their bug.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "lint": "oxlint --deny-warnings .",
+    "fmt": "oxfmt .",
+    "fmt:check": "oxfmt --check .",
+    "test": "vitest run --coverage",
+    "validate": "node scripts/validate-services.js",
+    "validate:offline": "node scripts/validate-services.js --skip-ping",
+    "check": "pnpm lint && pnpm fmt:check && pnpm validate:offline && pnpm test"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^5.1.0",
+    "ajv": "^8.20.0",
+    "oxfmt": "^0.78.0",
+    "oxlint": "^1.93.0",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@12.18.0"
+}

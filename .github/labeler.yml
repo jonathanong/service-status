@@ -1,0 +1,33 @@
+directory:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "plugins/service-status/skills/service-status/services.json"
+          - "plugins/service-status/skills/service-status/services.schema.json"
+
+skill:
+  - changed-files:
+      - any-glob-to-any-file: "plugins/service-status/skills/**"
+
+hook:
+  - changed-files:
+      - any-glob-to-any-file: "plugins/service-status/hooks/**"
+
+evals:
+  - changed-files:
+      - any-glob-to-any-file: "evals/**"
+
+plugin:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "plugins/**/.claude-plugin/**"
+          - "plugins/**/.codex-plugin/**"
+          - ".claude-plugin/**"
+          - ".agents/**"
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file: ["README.md", "CONTRIBUTING.md"]
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: ".github/**"

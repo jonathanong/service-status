@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    name: lint / validate / test
+    runs-on: ubuntu-slim
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24.x"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm fmt:check
+      - run: pnpm validate:offline
+      - run: pnpm test
+      - name: Upload test results to Codecov
+        if: ${{ always() && !cancelled() }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          report_type: test_results
+          files: ./test-results/junit.xml
+      - name: Upload coverage to Codecov
+        if: ${{ always() && !cancelled() }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+
+  # Live check of every status URL. Only runs when the directory changes, so a
+  # vendor's own outage can't block unrelated PRs.
+  directory-ping:
+    name: directory URLs respond
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Detect directory changes
+        id: changed
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          if git diff --quiet "$BASE_SHA" HEAD -- plugins/service-status/skills/service-status/services.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - if: ${{ steps.changed.outputs.changed == 'true' }}
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+      - if: ${{ steps.changed.outputs.changed == 'true' }}
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "24.x"
+          cache: pnpm
+      - if: ${{ steps.changed.outputs.changed == 'true' }}
+        run: pnpm install --frozen-lockfile
+      - if: ${{ steps.changed.outputs.changed == 'true' }}
+        run: pnpm validate

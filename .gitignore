@@ -1,0 +1,7 @@
+node_modules/
+coverage/
+test-results/
+plugins/service-status/evals/results/
+.DS_Store
+.claude/settings.local.json
+.claude/worktrees/

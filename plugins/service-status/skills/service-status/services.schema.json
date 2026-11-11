@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Service status directory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "services"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "version": { "const": 1 },
+    "services": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/service" }
+    }
+  },
+  "$defs": {
+    "url": { "type": "string", "pattern": "^https://[^\\s]+$" },
+    "service": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "category", "statusPage", "adapter", "endpoints"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "name": { "type": "string", "minLength": 1 },
+        "category": {
+          "enum": [
+            "source-control",
+            "ci",
+            "registry",
+            "ai",
+            "cloud",
+            "hosting",
+            "database",
+            "observability",
+            "communication",
+            "payments",
+            "productivity",
+            "other"
+          ]
+        },
+        "statusPage": { "$ref": "#/$defs/url", "description": "Human-readable status page." },
+        "adapter": {
+          "enum": [
+            "statuspage",
+            "incidentio",
+            "instatus",
+            "betterstack",
+            "statusio",
+            "aws",
+            "gcp",
+            "azure",
+            "azure-devops",
+            "slack",
+            "heroku",
+            "apple",
+            "feed-only"
+          ],
+          "description": "How to read the endpoints; see adapters.md."
+        },
+        "endpoints": {
+          "type": "object",
+          "additionalProperties": false,
+          "minProperties": 1,
+          "properties": {
+            "status": { "$ref": "#/$defs/url", "description": "Cheapest yes/no health endpoint." },
+            "summary": {
+              "$ref": "#/$defs/url",
+              "description": "Components plus active incidents (Statuspage family)."
+            },
+            "unresolved": {
+              "$ref": "#/$defs/url",
+              "description": "Active incidents only (Atlassian Statuspage)."
+            },
+            "events": {
+              "$ref": "#/$defs/url",
+              "description": "Native JSON event/incident list (aws, gcp, slack)."
+            },
+            "components": { "$ref": "#/$defs/url", "description": "Component or product list." },
+            "proxy": {
+              "$ref": "#/$defs/url",
+              "description": "incident.io page widget JSON (undocumented): .summary.ongoing_incidents and .summary.affected_components."
+            },
+            "atom": { "$ref": "#/$defs/url" },
+            "rss": { "$ref": "#/$defs/url" }
+          }
+        },
+        "hosts": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Hostnames (with optional leading *. wildcard) seen in error messages."
+        },
+        "commands": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "components": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Agent-relevant component names exactly as the page names them."
+        },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

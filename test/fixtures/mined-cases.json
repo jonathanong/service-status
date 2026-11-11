@@ -1,0 +1,325 @@
+[
+  {
+    "label": "outage",
+    "category": "github-api-502",
+    "command": "gh pr list --repo acme/app --state open",
+    "output": "HTTP 502: 502 Bad Gateway (https://api.github.com/graphql)"
+  },
+  {
+    "label": "outage",
+    "category": "github-api-504-graphql",
+    "command": "for i in 1 2 3; do gh pr list --repo acme/app --json number,title; done",
+    "output": "HTTP 504: 504 Gateway Timeout (https://api.github.com/graphql)"
+  },
+  {
+    "label": "outage",
+    "category": "github-api-504-graphql",
+    "command": "for r in app lib docs; do gh pr list --repo acme/$r --json number > $r.json 2> $r.err; done; cat *.err",
+    "output": "FAIL all acme: HTTP 504: 504 Gateway Timeout (https://api.github.com/graphql)"
+  },
+  {
+    "label": "outage",
+    "category": "github-actions-api-502",
+    "command": "gh run view 123 -R acme/app --log-failed 2>&1 | grep -iE 'error|fail' | head -60",
+    "output": "failed to get jobs: HTTP 502: Server Error (https://api.github.com/repos/acme/app/actions/runs/123/jobs?per_page=100)"
+  },
+  {
+    "label": "outage",
+    "category": "github-actions-api-502",
+    "command": "gh run view 123 --repo acme/app --json jobs",
+    "output": "Exit code 1\nHTTP 502: Server Error (https://api.github.com/repos/acme/app/actions/runs/123/jobs?per_page=100)"
+  },
+  {
+    "label": "outage",
+    "category": "github-api-502-wrapper",
+    "command": "pr-shepherd 123 --merge 2>/dev/null | head -60",
+    "output": "> Cancel runs of older entries for this pull request\n> gh: Server Error (HTTP 502)\n> jq: error (at <stdin>:3): Cannot iterate over null (null)"
+  },
+  {
+    "label": "outage",
+    "category": "github-search-503",
+    "command": "gh search code --repo acme/app \"fetch_timeout\" --json path",
+    "output": "HTTP 503: No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists. (https://api.github.com/search/code?page=1&per_page=30)"
+  },
+  {
+    "label": "outage",
+    "category": "github-actions-logs-503",
+    "command": "cat job-*.log | head -c 4000; gh api repos/acme/app/actions/jobs/123/logs",
+    "output": "Time:2026-10-23T07:14:02.5297341Z</Message></Error>gh: HTTP 503\n<?xml version=\"1.0\" encoding=\"utf-8\"?><Error><Code>ServerBusy</Code><Message>Egress is over the account limit.</Message></Error>"
+  },
+  {
+    "label": "outage",
+    "category": "github-merge-502",
+    "command": "gh pr merge 123 --repo acme/app --squash",
+    "output": "Exit code 1\nnon-200 OK status code: 502 Bad Gateway body: \"<html>\\r\\n<head><title>502 Bad Gateway</title></head>\""
+  },
+  {
+    "label": "outage",
+    "category": "github-merge-500",
+    "command": "gh api -X PUT repos/acme/app/pulls/123/merge -f merge_method=squash -i 2>&1 | head -20",
+    "output": "HTTP/2.0 500 Internal Server Error\nAccess-Control-Allow-Origin: *"
+  },
+  {
+    "label": "outage",
+    "category": "github-release-download-504",
+    "command": "gh run view 123 --repo acme/app --log-failed 2>&1 | grep -B25 'Process completed with exit code 1'",
+    "output": "github-actionlint: Download failed: 504 Gateway Time-out for https://github.com/rhysd/actionlint/releases/download/v1.7.12/actionlint_1.7.12_linux_amd64.tar.gz\n[ELIFECYCLE] Command failed with exit code 1."
+  },
+  {
+    "label": "outage",
+    "category": "github-release-download-504-bare",
+    "command": "curl -sS -o /dev/null -w \"%{http_code} %{time_total}s\\n\" -L --max-time 60 https://github.com/jdx/mise/releases/download/v2026.11.3/mise-linux-x64.tar.gz",
+    "output": "504 11.156008s",
+    "hook": "miss"
+  },
+  {
+    "label": "outage",
+    "category": "github-release-dns",
+    "command": "pr-shepherd 123 --until-terminal 2>&1 | tail -40",
+    "output": "> Install gitleaks\n> curl: (6) Could not resolve host: release-assets.githubusercontent.com\n> ##[error]Process completed with exit code 6."
+  },
+  {
+    "label": "outage",
+    "category": "github-graphql-502-wrapper",
+    "command": "pr-shepherd apply review https://github.com/acme/app/pull/123 --reply-thread-ids A,B,C --message \"Fixed\"",
+    "output": "Errors:\nA: GitHub GraphQL request failed: 502 <html>\n<head><title>502 Bad Gateway</title></head>"
+  },
+  {
+    "label": "outage",
+    "category": "github-graphql-502-wrapper",
+    "command": "pr-shepherd 123 124 125 126 --until-terminal",
+    "output": "pr-shepherd error: GitHub GraphQL request failed: 502 <html>\n<head><title>502 Bad Gateway</title></head>"
+  },
+  {
+    "label": "outage",
+    "category": "github-html-500-ci-install",
+    "command": "pr-shepherd https://github.com/acme/app/pull/123 --until-terminal --merge",
+    "output": "> ##[error]Installation of CodSpeed CLI with version 5.5.0 failed.\n> Reason: HTTP 500 - <!DOCTYPE html>\n> <html lang=\"en\">"
+  },
+  {
+    "label": "outage",
+    "category": "github-release-download-5xx-ci-log",
+    "command": "tail -30 ci.log",
+    "output": "> mise WARN  HTTP GET https://github.com/lycheeverse/lychee/releases/download/lychee-v0.24.2/lychee-x86_64-unknown-linux-gnu.tar.gz attempt 1 failed after 11.10s (transient): HTTP status server error (504 Gateway Timeout)",
+    "hook": "miss"
+  },
+  {
+    "label": "outage",
+    "category": "connection-died-retry-script",
+    "command": "bash wait-for-github.sh",
+    "output": "curl: (56) Connection died, tried 5 times before giving up\nRECOVERED after 5 checks",
+    "hook": "miss"
+  },
+  {
+    "label": "outage",
+    "category": "github-git-push-500",
+    "command": "git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push -u origin feature",
+    "output": "remote: Internal Server Error\nremote: Request ID FD49:20FC10:563AD3:689144:6AEAFEE6\n ! [remote rejected] HEAD -> feature (Internal Server Error)"
+  },
+  {
+    "label": "outage",
+    "category": "ci-runner-docker-timeout",
+    "command": "gh api repos/acme/app/actions/jobs/123/logs | grep -i error",
+    "output": "2026-10-27T01:19:33.7828010Z Error: spawnSync docker ETIMEDOUT"
+  },
+  {
+    "label": "outage",
+    "category": "anthropic-api-529",
+    "command": "",
+    "output": "API Error: 529 Overloaded. This is a server-side issue, usually temporary — try again in a moment. If it persists, check https://status.claude.com.",
+    "hook": "miss"
+  },
+
+  {
+    "label": "not-outage",
+    "category": "sandbox-known-hosts",
+    "command": "git fetch origin main --quiet",
+    "output": "hostkeys_find_by_key_hostfile: hostkeys_foreach failed for /home/user/.ssh/known_hosts: Operation not permitted\nHost key verification failed."
+  },
+  {
+    "label": "not-outage",
+    "category": "sandbox-git-config-lock",
+    "command": "git switch -q -c feature origin/main",
+    "output": "Exit code 1\nerror: could not lock config file .git/config: Operation not permitted"
+  },
+  {
+    "label": "not-outage",
+    "category": "sandbox-fetch-head",
+    "command": "git fetch -q origin main",
+    "output": "Exit code 255\nerror: cannot open '.git/FETCH_HEAD': Operation not permitted"
+  },
+  {
+    "label": "not-outage",
+    "category": "sandbox-cache-write",
+    "command": "cargo build -p app 2>&1 | grep -E '^error' -A9",
+    "output": "sccache: error: Operation not permitted (os error 1)"
+  },
+  {
+    "label": "not-outage",
+    "category": "sandbox-aws-metadata",
+    "command": "aws logs filter-log-events --region us-west-2 --log-group-name /app/worker",
+    "output": "aws: [ERROR]: An error occurred (NoCredentials): Unable to locate credentials.\n<sandbox_violations>\ndeny network-outbound 169.254.169.254:80\n</sandbox_violations>"
+  },
+  {
+    "label": "not-outage",
+    "category": "sandbox-proxy-502",
+    "command": "git fetch -q origin main && git show origin/main:package.json",
+    "output": "sandbox proxy: github.com:22: 502 Bad Gateway\nConnection closed by UNKNOWN port 22"
+  },
+  {
+    "label": "not-outage",
+    "category": "sandbox-status-page",
+    "command": "curl -s --max-time 15 https://www.githubstatus.com/api/v2/summary.json",
+    "output": "<sandbox_violations>\ndeny network-outbound www.githubstatus.com:443 (not in this command's allowed_domains)\n</sandbox_violations>"
+  },
+  {
+    "label": "not-outage",
+    "category": "auth-no-token",
+    "command": "pr-shepherd apply review https://github.com/acme/app/pull/123 --minimize-comment-ids A",
+    "output": "Errors:\nA: No GitHub token found. Set GH_TOKEN, GITHUB_TOKEN, or GITHUB_PERSONAL_ACCESS_TOKEN, or run `gh auth login`."
+  },
+  {
+    "label": "not-outage",
+    "category": "auth-ssh-publickey",
+    "command": "git fetch -q origin feature",
+    "output": "git@github.com: Permission denied (publickey).\nfatal: Could not read from remote repository."
+  },
+  {
+    "label": "not-outage",
+    "category": "github-secondary-rate-limit",
+    "command": "gh search issues --repo acme/app \"schema\" --state open --limit 10",
+    "output": "Exit code 1\nHTTP 403: You have exceeded a secondary rate limit. Please wait a few minutes before you try again."
+  },
+  {
+    "label": "not-outage",
+    "category": "github-404-run",
+    "command": "gh run view 123 --repo acme/app --json status,conclusion",
+    "output": "Exit code 1\nfailed to get run: HTTP 404: Not Found (https://api.github.com/repos/acme/app/actions/runs/123)"
+  },
+  {
+    "label": "not-outage",
+    "category": "github-404-workflow",
+    "command": "gh run list --repo acme/app --workflow deploy.yml --limit 5",
+    "output": "Exit code 1\nHTTP 404: workflow deploy.yml not found on the default branch (https://api.github.com/repos/acme/app/actions/workflows/deploy.yml)"
+  },
+  {
+    "label": "not-outage",
+    "category": "github-404-branch-protection",
+    "command": "gh api repos/acme/app/branches/main/protection",
+    "output": "{\"message\":\"Branch not protected\",\"status\":\"404\"}gh: Branch not protected (HTTP 404)"
+  },
+  {
+    "label": "not-outage",
+    "category": "github-404-package",
+    "command": "gh api /orgs/acme/packages/container/base-image",
+    "output": "Exit code 1\n{\"message\":\"Package not found.\",\"status\":\"404\"}gh: Package not found. (HTTP 404)"
+  },
+  {
+    "label": "not-outage",
+    "category": "test-assertion-500-mock",
+    "command": "DATABASE_URL=postgres://localhost/app pnpm exec vitest run api/request-validation.test.ts",
+    "output": "Error: expected 200 \"OK\", got 500 \"Internal Server Error\"\n ❯ api/request-validation.test.ts:143:70"
+  },
+  {
+    "label": "not-outage",
+    "category": "test-assertion-503-log-grep",
+    "command": "grep -E '^(Error|AssertionError)' test.log | sort | uniq -c",
+    "output": "   2 Error: expected 200 \"OK\", got 503 \"Service Unavailable\""
+  },
+  {
+    "label": "not-outage",
+    "category": "test-failure",
+    "command": "pnpm test 2>&1 | tail -25",
+    "output": "AssertionError: expected { status: 'pending' } to match object { title: 'Renamed' }\n Test Files  1 failed | 3 passed (4)"
+  },
+  {
+    "label": "not-outage",
+    "category": "typecheck-error",
+    "command": "pnpm run typecheck 2>&1 | tail -20",
+    "output": "src/cli/command.test.ts(16,61): error TS2307: Cannot find module './review.ts' or its corresponding type declarations."
+  },
+  {
+    "label": "not-outage",
+    "category": "merge-conflict",
+    "command": "git revert --no-commit abc1234 && git status --short",
+    "output": "CONFLICT (content): Merge conflict in src/search.ts"
+  },
+  {
+    "label": "not-outage",
+    "category": "merge-conflict-lockfile",
+    "command": "git fetch origin && git rebase origin/main",
+    "output": "Auto-merging pnpm-lock.yaml\nCONFLICT (content): Merge conflict in pnpm-lock.yaml"
+  },
+  {
+    "label": "not-outage",
+    "category": "dirty-tree",
+    "command": "git revert --no-edit abc1234",
+    "output": "error: your local changes would be overwritten by revert.\nhint: commit your changes or stash them to proceed."
+  },
+  {
+    "label": "not-outage",
+    "category": "own-command-timeout",
+    "command": "git checkout -B feature FETCH_HEAD; gh pr view 123 --json isDraft",
+    "output": "Exit code 143\nCommand timed out after 2m 0s"
+  },
+  {
+    "label": "not-outage",
+    "category": "own-command-timeout",
+    "command": "cat main.exit; grep -E 'real' main.time",
+    "output": "error: command timed out after 600 seconds during check.parse"
+  },
+  {
+    "label": "not-outage",
+    "category": "lock-contention",
+    "command": "pnpm exec app-lib check 2>&1 | tail -40",
+    "output": "error: timed out after 30 seconds waiting for another app-lib invocation (held by pid 4242)"
+  },
+  {
+    "label": "not-outage",
+    "category": "local-docker-daemon-500",
+    "command": "which docker colima; docker ps",
+    "output": "request returned 500 Internal Server Error for API route and version http://%2Fhome%2Fuser%2F.docker%2Frun%2Fdocker.sock/v1.56/containers/json, check if the server supports the requested API version"
+  },
+  {
+    "label": "not-outage",
+    "category": "local-dns",
+    "command": "ssh -o BatchMode=yes -o ConnectTimeout=10 build-box 'uname -srm'",
+    "output": "ssh: Could not resolve hostname build-box.internal.example.com: nodename nor servname provided, or not known"
+  },
+  {
+    "label": "not-outage",
+    "category": "status-check-clean",
+    "command": "curl -s -m 5 https://www.githubstatus.com/api/v2/summary.json | jq -c '{status:.status.description}'",
+    "output": "{\"status\":\"All Systems Operational\"}"
+  },
+  {
+    "label": "not-outage",
+    "category": "status-check-no-incidents",
+    "command": "curl -s https://www.githubstatus.com/api/v2/incidents/unresolved.json",
+    "output": "{\"page\":{\"name\":\"GitHub\",\"url\":\"https://www.githubstatus.com\"},\"incidents\":[]}"
+  },
+  {
+    "label": "not-outage",
+    "category": "sandbox-worktree-delete",
+    "command": "git worktree remove /tmp/wt",
+    "output": "Exit code 255\nerror: failed to delete '/tmp/wt': Operation not permitted"
+  },
+  {
+    "label": "not-outage",
+    "category": "own-tool-rate-limit",
+    "command": "pr-shepherd apply review https://github.com/acme/app/pull/123 --reply-thread-ids A,B",
+    "output": "Not replied due to rate limit: A, B\nNot resolved due to rate limit: A, B"
+  },
+  {
+    "label": "not-outage",
+    "category": "local-server-reset",
+    "command": "node scripts/smoke.js",
+    "output": "Error: read ECONNRESET\n    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)"
+  },
+  {
+    "label": "not-outage",
+    "category": "local-fetch-localhost",
+    "command": "npm test",
+    "output": "FetchError: request to http://localhost:3000/health failed, reason: socket hang up"
+  }
+]

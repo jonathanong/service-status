@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "service-status",
+  "description": "Tell coding agents when a failure is a third-party outage, not their bug",
+  "owner": {
+    "name": "Jonathan Ong"
+  },
+  "plugins": [
+    {
+      "name": "service-status",
+      "description": "Skill + hook: recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply",
+      "source": "./plugins/service-status",
+      "category": "productivity",
+      "homepage": "https://github.com/jonathanong/service-status"
+    }
+  ]
+}
