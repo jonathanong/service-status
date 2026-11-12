@@ -50,6 +50,7 @@
             "gcp",
             "azure",
             "azure-devops",
+            "microsoft365",
             "slack",
             "heroku",
             "apple",

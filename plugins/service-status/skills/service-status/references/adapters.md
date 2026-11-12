@@ -18,15 +18,16 @@ Rules of thumb:
 
 | adapter                  | entries | (a) health check      | raw / gzip bytes             | (b) which incident or component                                    |
 | ------------------------ | ------- | --------------------- | ---------------------------- | ------------------------------------------------------------------ |
-| `statuspage` (Atlassian) | 82      | `status`              | 215 / 215 (github)           | `unresolved`, then `summary`                                       |
-| `incidentio`             | 31      | `status`              | 202 / 200 (openai)           | `proxy`                                                            |
+| `statuspage` (Atlassian) | 113     | `status`              | 215 / 215 (github)           | `unresolved`, then `summary`                                       |
+| `incidentio`             | 36      | `status`              | 202 / 200 (openai)           | `proxy`                                                            |
 | `instatus`               | 3       | `status`              | 69 / 85 (deno)               | `status` (northflank, koyeb list active incidents) or `components` |
 | `betterstack`            | 3       | first 1KB of `status` | 77,381 / 4,531 (huggingface) | `rss` head                                                         |
 | `statusio`               | 2       | `status`              | 11,354 / 1,343 (gitlab)      | same document                                                      |
 | `aws`                    | 1       | `events` filtered     | 276,712 / 28,362             | same document, or per-service RSS (719 raw)                        |
-| `gcp`                    | 2       | `atom` head via Range | 2,048                        | `events` filtered by `end == null`                                 |
+| `gcp`                    | 3       | `atom` head via Range | 2,048                        | `events` filtered by `end == null`                                 |
 | `azure`                  | 1       | `rss`                 | 577 / 445                    | the same feed (empty channel means no active incident)             |
 | `azure-devops`           | 1       | `status`              | 3,187 / 531                  | the same document                                                  |
+| `microsoft365`           | 1       | `status`              | 2,125 / 1,333 (incident)     | the same document                                                  |
 | `slack`                  | 1       | `status`              | 123 / 123                    | the same document                                                  |
 | `heroku`                 | 1       | `status`              | 4,375 / 4,375                | the same document                                                  |
 | `apple`                  | 1       | `status`              | 6,136 / 1,447                | the same document                                                  |
@@ -71,7 +72,7 @@ Incident impact values: `none`, `minor`, `major`, `critical`. Component `status`
 
 ## incidentio (OpenAI, Linear, Docker Hub, ...)
 
-These pages (served from Vercel, no `x-statuspage-version` header) expose a Statuspage-shaped compatibility API, but only part of it. Verified on all 31 entries: `status.json`, `summary.json` (components only, no incidents), `history.atom`, `history.rss` and `proxy`. `/api/v2/incidents/unresolved.json` does not exist here: it returns HTTP 404 with a ~296KB HTML page. Never call it.
+These pages (served from Vercel, no `x-statuspage-version` header) expose a Statuspage-shaped compatibility API, but only part of it. Verified on the original 31 entries: `status.json`, `summary.json` (components only, no incidents), `history.atom`, `history.rss` and `proxy`. `/api/v2/incidents/unresolved.json` does not exist here: it returns HTTP 404 with a ~296KB HTML page. Never call it.
 
 ```sh
 # (a) 202 bytes. OpenAI at the time of testing: {"description":"Major System Outage","indicator":"critical"}
@@ -161,7 +162,7 @@ curl -s https://status.aws.amazon.com/rss/ec2-us-east-1.rss | grep -c '<item>'
 
 Gotcha: events can stay open for months. At testing time two "Region Availability" events (me-central-1, me-south-1) had been status 3 since March 2026. Do not treat an open event as "now" without checking the region.
 
-## gcp (Google Cloud, Firebase)
+## gcp (Google Cloud, Firebase, Google Workspace)
 
 `incidents.json` is 292,106 raw / 53,186 gzip (Firebase: 79,576 / 13,390). It is a JSON array, newest `begin` first, with Range support.
 
@@ -177,6 +178,8 @@ curl -s --compressed https://status.cloud.google.com/incidents.json \
 ```
 
 `products.json` (23,109 / 7,145) is the product list for the `components` key (top-level object with `products`). Firebase has `feed.atom` too (1,226 raw, 574 gzip).
+
+Google Workspace uses the same format under `https://www.google.com/appsstatus/dashboard/` (`incidents.json` 292,503 raw / 37,712 gzip, `feed.atom` with Range, `products.json`). Swap the base URL in the recipes above.
 
 ## azure
 
@@ -197,6 +200,24 @@ curl -s 'https://status.dev.azure.com/_apis/status/health?api-version=6.0-previe
 ```
 
 `health` is `healthy`, `advisory` (often maintenance), `degraded` or `unhealthy`. 3,187 raw / 531 gzip.
+
+## microsoft365
+
+Recipes run on 2026-11-12, during a live incident. `status.cloud.microsoft` is a client-rendered page; the JSON below is what it loads.
+
+```sh
+# (a)+(b) one document. Status "Available" with Title null = no published incident.
+curl -s --compressed https://status.cloud.microsoft/api/posts/mac | jq -c '{Status,Title,LastUpdatedTime}'
+# -> {"Status":"Service degradation","Title":"Users may be unable to connect to multiple Microsoft 365 services","LastUpdatedTime":"2026-11-12T21:01:14+00:00"}
+
+# Incident body is HTML (impacted services, current status, next update time):
+curl -s --compressed https://status.cloud.microsoft/api/posts/mac \
+  | jq -r .Message | perl -pe 's/<br>|<\/div>/\n/g; s/<[^>]+>//g' | grep -v '^\s*$'
+```
+
+2,125 raw / 1,333 gzip during the incident. `api/feed/mac` is the same post as RSS (2,775 / 1,582). `api/posts/m365Consumer` returns 501 and is not listed. The healthy shape (`"Status":"Available"`, `"Title":null`) comes from archived copies of the same URL.
+
+This page is only for large incidents that may stop tenant admins from reaching Service health. Most Microsoft 365 incidents appear only in the tenant's admin center (Graph `serviceAnnouncement`, which needs credentials), so "Available" here does not clear a tenant-specific issue.
 
 ## slack
 
@@ -244,7 +265,7 @@ An entry is "current" only if its body says it is not resolved. A recent `<updat
 ## Gotchas
 
 - **Cloudflare components are mostly data centres.** `summary.json` is ~225KB and ~66 components were non-operational at testing time, almost all "City, Country - (XXX)" data-centre rows in routine maintenance. Use `status.json` and `unresolved.json`, and pick named products (Workers, R2, Pages, ...). Replicate is a Cloudflare component now.
-- **Atlassian umbrella vs product pages.** `status.atlassian.com` mostly reports cross-product incidents; Jira, Confluence, Bitbucket and Trello each have their own page in this directory.
+- **Atlassian umbrella vs product pages.** `status.atlassian.com` mostly reports cross-product incidents; Jira, Confluence, Bitbucket, Trello and Opsgenie each have their own page in this directory.
 - **GitHub has one page for everything.** Actions, Pages, Packages and Copilot are components, not separate entries.
 - **Status pages lag real outages**, often by 10 to 30 minutes, and some vendors only post major ones. A green page does not clear the vendor; a red one is strong evidence.
 - **Statuspage `indicator: none` can coexist with a scheduled maintenance** (`maintenance` indicator) and with per-component degradation. Check the component you depend on.
@@ -253,6 +274,6 @@ An entry is "current" only if its body says it is not resolved. A recent `<updat
 - **AWS is UTF-16**, 276KB, multilingual, and includes long-open regional events.
 - **Some human pages return 403 to non-browser clients** (Mistral, Fastly). Their JSON API or feed URLs in the directory were verified with plain `curl`.
 - **Local DNS filters can null-route status hosts.** `status.datadoghq.com`, `status.newrelic.com` and `status.bugsnag.com` resolved to `0.0.0.0` on the machine that built this directory. The entries use the vendor's `*.statuspage.io` hostnames instead, and `page.url` in those responses confirms the vanity domain. A connect error to a status host is not an outage.
-- **Redirecting hostnames.** `status.quay.io`, `status.semaphoreci.com`, `status.codecov.io`, `status.zoom.us`, `status.prisma.io` and others redirect; the directory lists the final URL, so a missing `-L` is fine.
+- **Redirecting hostnames.** `status.quay.io`, `status.semaphoreci.com`, `status.codecov.io`, `status.zoom.us`, `status.prisma.io`, `status.intercom.com` (now Fin), `status.easypost.com`, `status.doppler.com` and others redirect; the directory lists the final URL, so a missing `-L` is fine.
 - **Bad bots.** Do not set a fake browser User-Agent to get past a 403; drop the entry or use another endpoint. `status.x.ai` (also what `status.cursor.com` redirects to) returns 403 to curl and is not in the directory.
 - **Plain `curl -s -m 10` is enough** for every endpoint in `services.json`: none needs special headers (`verification.json` was produced that way). Add `--compressed` for fewer bytes.

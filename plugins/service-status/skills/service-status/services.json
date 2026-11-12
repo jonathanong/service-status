@@ -3,6 +3,37 @@
   "version": 1,
   "services": [
     {
+      "id": "1password",
+      "name": "1Password",
+      "category": "other",
+      "statusPage": "https://status.1password.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.1password.com/api/v2/status.json",
+        "summary": "https://status.1password.com/api/v2/summary.json",
+        "unresolved": "https://status.1password.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.1password.com/history.atom",
+        "rss": "https://status.1password.com/history.rss"
+      },
+      "hosts": ["*.1password.com", "*.1password.eu", "*.1password.ca"],
+      "commands": ["op"]
+    },
+    {
+      "id": "ably",
+      "name": "Ably",
+      "category": "communication",
+      "statusPage": "https://status.ably.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.ably.com/api/v2/status.json",
+        "summary": "https://status.ably.com/api/v2/summary.json",
+        "unresolved": "https://status.ably.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.ably.com/history.atom",
+        "rss": "https://status.ably.com/history.rss"
+      },
+      "hosts": ["*.ably.io", "*.ably-realtime.com"]
+    },
+    {
       "id": "airtable",
       "name": "Airtable",
       "category": "productivity",
@@ -105,6 +136,36 @@
       "notes": "Response is JSONP (jsonCallback(...)); strip the wrapper before jq. Each service has events[]; an event with eventStatus != \"resolved\" is active."
     },
     {
+      "id": "asana",
+      "name": "Asana",
+      "category": "productivity",
+      "statusPage": "https://status.asana.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.asana.com/api/v2/status.json",
+        "summary": "https://status.asana.com/api/v2/summary.json",
+        "unresolved": "https://status.asana.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.asana.com/history.atom",
+        "rss": "https://status.asana.com/history.rss"
+      },
+      "hosts": ["app.asana.com"]
+    },
+    {
+      "id": "assemblyai",
+      "name": "AssemblyAI",
+      "category": "ai",
+      "statusPage": "https://status.assemblyai.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.assemblyai.com/api/v2/status.json",
+        "summary": "https://status.assemblyai.com/api/v2/summary.json",
+        "unresolved": "https://status.assemblyai.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.assemblyai.com/history.atom",
+        "rss": "https://status.assemblyai.com/history.rss"
+      },
+      "hosts": ["api.assemblyai.com", "streaming.assemblyai.com"]
+    },
+    {
       "id": "atlassian",
       "name": "Atlassian (umbrella)",
       "category": "productivity",
@@ -199,6 +260,21 @@
       "hosts": ["*.baseten.co"]
     },
     {
+      "id": "bigcommerce",
+      "name": "BigCommerce",
+      "category": "other",
+      "statusPage": "https://status.bigcommerce.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.bigcommerce.com/api/v2/status.json",
+        "summary": "https://status.bigcommerce.com/api/v2/summary.json",
+        "unresolved": "https://status.bigcommerce.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.bigcommerce.com/history.atom",
+        "rss": "https://status.bigcommerce.com/history.rss"
+      },
+      "hosts": ["api.bigcommerce.com", "login.bigcommerce.com", "*.mybigcommerce.com"]
+    },
+    {
       "id": "bitbucket",
       "name": "Bitbucket",
       "category": "source-control",
@@ -229,6 +305,21 @@
         "rss": "https://status.bitrise.io/history.rss"
       },
       "hosts": ["bitrise.io", "api.bitrise.io"]
+    },
+    {
+      "id": "box",
+      "name": "Box",
+      "category": "productivity",
+      "statusPage": "https://status.box.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.box.com/api/v2/status.json",
+        "summary": "https://status.box.com/api/v2/summary.json",
+        "unresolved": "https://status.box.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.box.com/history.atom",
+        "rss": "https://status.box.com/history.rss"
+      },
+      "hosts": ["api.box.com", "upload.box.com", "app.box.com", "account.box.com"]
     },
     {
       "id": "browserbase",
@@ -308,6 +399,21 @@
       "hosts": ["bunny.net", "*.b-cdn.net"]
     },
     {
+      "id": "canva",
+      "name": "Canva",
+      "category": "productivity",
+      "statusPage": "https://www.canvastatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.canvastatus.com/api/v2/status.json",
+        "summary": "https://www.canvastatus.com/api/v2/summary.json",
+        "unresolved": "https://www.canvastatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.canvastatus.com/history.atom",
+        "rss": "https://www.canvastatus.com/history.rss"
+      },
+      "hosts": ["api.canva.com", "www.canva.com"]
+    },
+    {
       "id": "cerebras",
       "name": "Cerebras",
       "category": "ai",
@@ -373,6 +479,21 @@
         "proxy": "https://status.clickhouse.com/proxy/status.clickhouse.com"
       },
       "hosts": ["*.clickhouse.cloud"]
+    },
+    {
+      "id": "clickup",
+      "name": "ClickUp",
+      "category": "productivity",
+      "statusPage": "https://status.clickup.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.clickup.com/api/v2/status.json",
+        "summary": "https://status.clickup.com/api/v2/summary.json",
+        "proxy": "https://status.clickup.com/proxy/status.clickup.com",
+        "atom": "https://status.clickup.com/history.atom",
+        "rss": "https://status.clickup.com/history.rss"
+      },
+      "hosts": ["api.clickup.com", "app.clickup.com"]
     },
     {
       "id": "cloudbees",
@@ -553,6 +674,23 @@
       "hosts": ["*.atlassian.net"]
     },
     {
+      "id": "confluent",
+      "name": "Confluent Cloud",
+      "category": "cloud",
+      "statusPage": "https://status.confluent.cloud",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.confluent.cloud/api/v2/status.json",
+        "summary": "https://status.confluent.cloud/api/v2/summary.json",
+        "unresolved": "https://status.confluent.cloud/api/v2/incidents/unresolved.json",
+        "atom": "https://status.confluent.cloud/history.atom",
+        "rss": "https://status.confluent.cloud/history.rss"
+      },
+      "hosts": ["*.confluent.cloud"],
+      "commands": ["confluent"],
+      "notes": "Single component (Confluent Cloud); read the incident text for the affected cloud and region."
+    },
+    {
       "id": "contentful",
       "name": "Contentful",
       "category": "other",
@@ -631,6 +769,35 @@
       "hosts": ["*.datadoghq.com", "*.datadoghq.eu", "*.ddog-gov.com"],
       "commands": ["datadog-ci"],
       "notes": "Endpoints use the vendor statuspage.io host (page.url reports status.datadoghq.com). US1 only; other Datadog sites have separate pages. status.datadoghq.com did not resolve from the verifying machine (local DNS), so only the statuspage.io host was verified."
+    },
+    {
+      "id": "dbt",
+      "name": "dbt Cloud",
+      "category": "database",
+      "statusPage": "https://status.getdbt.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.getdbt.com/api/v2/status.json",
+        "summary": "https://status.getdbt.com/api/v2/summary.json",
+        "proxy": "https://status.getdbt.com/proxy/status.getdbt.com"
+      },
+      "hosts": ["cloud.getdbt.com", "*.getdbt.com", "*.dbt.com"],
+      "notes": "No history.atom / history.rss (404); use proxy for incident names."
+    },
+    {
+      "id": "deepgram",
+      "name": "Deepgram",
+      "category": "ai",
+      "statusPage": "https://status.deepgram.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.deepgram.com/api/v2/status.json",
+        "summary": "https://status.deepgram.com/api/v2/summary.json",
+        "unresolved": "https://status.deepgram.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.deepgram.com/history.atom",
+        "rss": "https://status.deepgram.com/history.rss"
+      },
+      "hosts": ["api.deepgram.com"]
     },
     {
       "id": "deepseek",
@@ -734,6 +901,38 @@
       "notes": "incident.io-hosted page; use status.json for the yes/no check, proxy for incident names."
     },
     {
+      "id": "doppler",
+      "name": "Doppler",
+      "category": "other",
+      "statusPage": "https://www.dopplerstatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.dopplerstatus.com/api/v2/status.json",
+        "summary": "https://www.dopplerstatus.com/api/v2/summary.json",
+        "unresolved": "https://www.dopplerstatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.dopplerstatus.com/history.atom",
+        "rss": "https://www.dopplerstatus.com/history.rss"
+      },
+      "hosts": ["api.doppler.com", "cli.doppler.com", "dashboard.doppler.com"],
+      "commands": ["doppler"],
+      "notes": "Also mirrors upstream components (Cloudflare, Vercel, Heroku); a degraded upstream row is not necessarily a Doppler incident."
+    },
+    {
+      "id": "dropbox",
+      "name": "Dropbox",
+      "category": "productivity",
+      "statusPage": "https://status.dropbox.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.dropbox.com/api/v2/status.json",
+        "summary": "https://status.dropbox.com/api/v2/summary.json",
+        "unresolved": "https://status.dropbox.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.dropbox.com/history.atom",
+        "rss": "https://status.dropbox.com/history.rss"
+      },
+      "hosts": ["*.dropboxapi.com", "www.dropbox.com", "dl.dropboxusercontent.com"]
+    },
+    {
       "id": "e2b",
       "name": "E2B",
       "category": "ai",
@@ -747,6 +946,22 @@
         "proxy": "https://status.e2b.dev/proxy/status.e2b.dev"
       },
       "hosts": ["api.e2b.dev", "e2b.dev"]
+    },
+    {
+      "id": "easypost",
+      "name": "EasyPost",
+      "category": "other",
+      "statusPage": "https://www.easypoststatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.easypoststatus.com/api/v2/status.json",
+        "summary": "https://www.easypoststatus.com/api/v2/summary.json",
+        "unresolved": "https://www.easypoststatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.easypoststatus.com/history.atom",
+        "rss": "https://www.easypoststatus.com/history.rss"
+      },
+      "hosts": ["api.easypost.com"],
+      "notes": "Per-carrier components (USPS, Australia Post, ...): a carrier row can be degraded while the EasyPost API is fine."
     },
     {
       "id": "elastic",
@@ -776,6 +991,24 @@
       },
       "hosts": ["api.elevenlabs.io"],
       "notes": "No history feed; status.json and summary.json only."
+    },
+    {
+      "id": "expo",
+      "name": "Expo",
+      "category": "ci",
+      "statusPage": "https://status.expo.dev",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.expo.dev/api/v2/status.json",
+        "summary": "https://status.expo.dev/api/v2/summary.json",
+        "unresolved": "https://status.expo.dev/api/v2/incidents/unresolved.json",
+        "atom": "https://status.expo.dev/history.atom",
+        "rss": "https://status.expo.dev/history.rss"
+      },
+      "hosts": ["expo.dev", "api.expo.dev", "u.expo.dev", "exp.host"],
+      "commands": ["eas", "expo"],
+      "components": ["EAS Build", "EAS Submit", "EAS Update", "EAS Workflows", "Dev Tools API"],
+      "notes": "Also mirrors upstream components (GitHub, Google Cloud, Cloudflare, AWS S3, npm); judge by the EAS rows."
     },
     {
       "id": "fastly",
@@ -834,6 +1067,22 @@
         "proxy": "https://status.fireworks.ai/proxy/status.fireworks.ai"
       },
       "hosts": ["api.fireworks.ai"]
+    },
+    {
+      "id": "fivetran",
+      "name": "Fivetran",
+      "category": "database",
+      "statusPage": "https://status.fivetran.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.fivetran.com/api/v2/status.json",
+        "summary": "https://status.fivetran.com/api/v2/summary.json",
+        "unresolved": "https://status.fivetran.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.fivetran.com/history.atom",
+        "rss": "https://status.fivetran.com/history.rss"
+      },
+      "hosts": ["api.fivetran.com", "fivetran.com"],
+      "notes": "Not Atlassian-hosted, but serves the same status/summary/unresolved JSON. summary.json lists hundreds of per-connector components; prefer unresolved. Connector incidents are often upstream outages (labelled '3rd Party')."
     },
     {
       "id": "flyio",
@@ -939,6 +1188,51 @@
         "GitLab Pages",
         "Website"
       ]
+    },
+    {
+      "id": "google-workspace",
+      "name": "Google Workspace",
+      "category": "productivity",
+      "statusPage": "https://www.google.com/appsstatus/dashboard/",
+      "adapter": "gcp",
+      "endpoints": {
+        "atom": "https://www.google.com/appsstatus/dashboard/feed.atom",
+        "events": "https://www.google.com/appsstatus/dashboard/incidents.json",
+        "components": "https://www.google.com/appsstatus/dashboard/products.json"
+      },
+      "hosts": [
+        "mail.google.com",
+        "docs.google.com",
+        "drive.google.com",
+        "calendar.google.com",
+        "meet.google.com",
+        "chat.google.com",
+        "script.google.com"
+      ],
+      "commands": ["gam"],
+      "notes": "Same incidents.json / feed.atom format as Google Cloud (active = end == null). Workspace API hosts such as gmail.googleapis.com also match the gcp entry; check both."
+    },
+    {
+      "id": "gradle",
+      "name": "Gradle",
+      "category": "registry",
+      "statusPage": "https://status.gradle.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.gradle.com/api/v2/status.json",
+        "summary": "https://status.gradle.com/api/v2/summary.json",
+        "unresolved": "https://status.gradle.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.gradle.com/history.atom",
+        "rss": "https://status.gradle.com/history.rss"
+      },
+      "hosts": ["services.gradle.org", "scans.gradle.com", "ge.gradle.org", "registry.gradle.com"],
+      "commands": ["gradle", "gradlew"],
+      "components": [
+        "Downloads (services.gradle.org)",
+        "Public Build Scan service (scans.gradle.com)",
+        "Gradle's Maven Central redirect"
+      ],
+      "notes": "The Gradle Plugin Portal (plugins.gradle.org) is not a component here."
     },
     {
       "id": "grafana-cloud",
@@ -1060,6 +1354,22 @@
       "hosts": ["api.honeycomb.io", "*.honeycomb.io"]
     },
     {
+      "id": "hubspot",
+      "name": "HubSpot",
+      "category": "other",
+      "statusPage": "https://status.hubspot.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.hubspot.com/api/v2/status.json",
+        "summary": "https://status.hubspot.com/api/v2/summary.json",
+        "unresolved": "https://status.hubspot.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.hubspot.com/history.atom",
+        "rss": "https://status.hubspot.com/history.rss"
+      },
+      "hosts": ["api.hubapi.com", "api.hubspot.com", "app.hubspot.com"],
+      "components": ["HubSpot APIs"]
+    },
+    {
       "id": "huggingface",
       "name": "Hugging Face",
       "category": "ai",
@@ -1072,6 +1382,35 @@
       "hosts": ["huggingface.co", "hf.co", "*.hf.co", "cdn-lfs.huggingface.co"],
       "commands": ["hf", "huggingface-cli"],
       "notes": "Better Stack page. Read aggregate_state from the first 1KB of index.json."
+    },
+    {
+      "id": "incident-io",
+      "name": "incident.io",
+      "category": "observability",
+      "statusPage": "https://status.incident.io",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.incident.io/api/v2/status.json",
+        "summary": "https://status.incident.io/api/v2/summary.json",
+        "proxy": "https://status.incident.io/proxy/status.incident.io",
+        "atom": "https://status.incident.io/history.atom",
+        "rss": "https://status.incident.io/history.rss"
+      },
+      "hosts": ["api.incident.io", "app.incident.io"]
+    },
+    {
+      "id": "intercom",
+      "name": "Intercom (Fin)",
+      "category": "communication",
+      "statusPage": "https://www.finstatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://www.finstatus.com/api/v2/status.json",
+        "summary": "https://www.finstatus.com/api/v2/summary.json",
+        "proxy": "https://www.finstatus.com/proxy/www.finstatus.com"
+      },
+      "hosts": ["api.intercom.io", "app.intercom.com", "widget.intercom.io"],
+      "notes": "status.intercom.com and www.intercomstatus.com redirect here (Intercom rebranded to Fin). No history feeds (404)."
     },
     {
       "id": "jfrog",
@@ -1104,6 +1443,21 @@
       },
       "hosts": ["*.atlassian.net"],
       "notes": "Product page for Jira Software; the umbrella page can miss product incidents."
+    },
+    {
+      "id": "klaviyo",
+      "name": "Klaviyo",
+      "category": "communication",
+      "statusPage": "https://status.klaviyo.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.klaviyo.com/api/v2/status.json",
+        "summary": "https://status.klaviyo.com/api/v2/summary.json",
+        "unresolved": "https://status.klaviyo.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.klaviyo.com/history.atom",
+        "rss": "https://status.klaviyo.com/history.rss"
+      },
+      "hosts": ["a.klaviyo.com", "static.klaviyo.com", "www.klaviyo.com"]
     },
     {
       "id": "koyeb",
@@ -1195,6 +1549,21 @@
       "hosts": ["api.mailgun.net", "api.eu.mailgun.net"]
     },
     {
+      "id": "mapbox",
+      "name": "Mapbox",
+      "category": "other",
+      "statusPage": "https://status.mapbox.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.mapbox.com/api/v2/status.json",
+        "summary": "https://status.mapbox.com/api/v2/summary.json",
+        "unresolved": "https://status.mapbox.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.mapbox.com/history.atom",
+        "rss": "https://status.mapbox.com/history.rss"
+      },
+      "hosts": ["api.mapbox.com", "events.mapbox.com"]
+    },
+    {
       "id": "maven-central",
       "name": "Maven Central",
       "category": "registry",
@@ -1215,6 +1584,28 @@
       ],
       "commands": ["mvn", "gradle"],
       "components": ["CDN - repo1.maven.org", "Portal - central.sonatype.com"]
+    },
+    {
+      "id": "microsoft-365",
+      "name": "Microsoft 365",
+      "category": "productivity",
+      "statusPage": "https://status.cloud.microsoft/",
+      "adapter": "microsoft365",
+      "endpoints": {
+        "status": "https://status.cloud.microsoft/api/posts/mac",
+        "rss": "https://status.cloud.microsoft/api/feed/mac"
+      },
+      "hosts": [
+        "*.office365.com",
+        "*.office.com",
+        "*.sharepoint.com",
+        "teams.microsoft.com",
+        "*.teams.microsoft.com",
+        "graph.microsoft.com",
+        "*.protection.outlook.com"
+      ],
+      "commands": ["m365"],
+      "notes": "Public page is only updated for large incidents (when tenant admins may not reach Service health). Status 'Available' with Title null means no such incident, not that your tenant is healthy; tenant-level health is in the admin center (portal.office.com, login required). Entra ID sign-in (login.microsoftonline.com) is listed under azure."
     },
     {
       "id": "miro",
@@ -1246,6 +1637,21 @@
       "notes": "No history feed; status.json and summary.json only. The human page returns 403 to non-browser clients; the JSON API does not."
     },
     {
+      "id": "mixpanel",
+      "name": "Mixpanel",
+      "category": "observability",
+      "statusPage": "https://www.mixpanelstatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.mixpanelstatus.com/api/v2/status.json",
+        "summary": "https://www.mixpanelstatus.com/api/v2/summary.json",
+        "unresolved": "https://www.mixpanelstatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.mixpanelstatus.com/history.atom",
+        "rss": "https://www.mixpanelstatus.com/history.rss"
+      },
+      "hosts": ["api.mixpanel.com", "api-eu.mixpanel.com", "data.mixpanel.com", "mixpanel.com"]
+    },
+    {
       "id": "modal",
       "name": "Modal",
       "category": "ai",
@@ -1258,6 +1664,21 @@
       "hosts": ["modal.com", "api.modal.com"],
       "commands": ["modal"],
       "notes": "Better Stack page; index.json is ~124KB, read only the first 1KB for aggregate_state."
+    },
+    {
+      "id": "monday",
+      "name": "monday.com",
+      "category": "productivity",
+      "statusPage": "https://status.monday.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.monday.com/api/v2/status.json",
+        "summary": "https://status.monday.com/api/v2/summary.json",
+        "unresolved": "https://status.monday.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.monday.com/history.atom",
+        "rss": "https://status.monday.com/history.rss"
+      },
+      "hosts": ["api.monday.com", "*.monday.com"]
     },
     {
       "id": "mongodb-atlas",
@@ -1274,6 +1695,21 @@
       },
       "hosts": ["*.mongodb.net", "cloud.mongodb.com"],
       "commands": ["mongosh", "atlas"]
+    },
+    {
+      "id": "mux",
+      "name": "Mux",
+      "category": "hosting",
+      "statusPage": "https://status.mux.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.mux.com/api/v2/status.json",
+        "summary": "https://status.mux.com/api/v2/summary.json",
+        "unresolved": "https://status.mux.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.mux.com/history.atom",
+        "rss": "https://status.mux.com/history.rss"
+      },
+      "hosts": ["api.mux.com", "stream.mux.com", "image.mux.com"]
     },
     {
       "id": "neon",
@@ -1414,6 +1850,21 @@
       "notes": "Feed only (no JSON API found). An empty or old feed head means no recent incidents."
     },
     {
+      "id": "opsgenie",
+      "name": "Opsgenie",
+      "category": "observability",
+      "statusPage": "https://opsgenie.status.atlassian.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://opsgenie.status.atlassian.com/api/v2/status.json",
+        "summary": "https://opsgenie.status.atlassian.com/api/v2/summary.json",
+        "unresolved": "https://opsgenie.status.atlassian.com/api/v2/incidents/unresolved.json",
+        "atom": "https://opsgenie.status.atlassian.com/history.atom",
+        "rss": "https://opsgenie.status.atlassian.com/history.rss"
+      },
+      "hosts": ["api.opsgenie.com", "api.eu.opsgenie.com", "*.app.opsgenie.com"]
+    },
+    {
       "id": "oracle-cloud",
       "name": "Oracle Cloud",
       "category": "cloud",
@@ -1458,6 +1909,21 @@
       "hosts": ["api.perplexity.ai"]
     },
     {
+      "id": "pganalyze",
+      "name": "pganalyze",
+      "category": "observability",
+      "statusPage": "https://status.pganalyze.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.pganalyze.com/api/v2/status.json",
+        "summary": "https://status.pganalyze.com/api/v2/summary.json",
+        "unresolved": "https://status.pganalyze.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.pganalyze.com/history.atom",
+        "rss": "https://status.pganalyze.com/history.rss"
+      },
+      "hosts": ["app.pganalyze.com", "api.pganalyze.com"]
+    },
+    {
       "id": "pinecone",
       "name": "Pinecone",
       "category": "ai",
@@ -1471,6 +1937,21 @@
         "rss": "https://status.pinecone.io/history.rss"
       },
       "hosts": ["api.pinecone.io", "*.pinecone.io"]
+    },
+    {
+      "id": "plaid",
+      "name": "Plaid",
+      "category": "payments",
+      "statusPage": "https://status.plaid.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.plaid.com/api/v2/status.json",
+        "summary": "https://status.plaid.com/api/v2/summary.json",
+        "proxy": "https://status.plaid.com/proxy/status.plaid.com",
+        "atom": "https://status.plaid.com/history.atom",
+        "rss": "https://status.plaid.com/history.rss"
+      },
+      "hosts": ["production.plaid.com", "sandbox.plaid.com", "cdn.plaid.com"]
     },
     {
       "id": "planetscale",
@@ -1549,6 +2030,21 @@
       "commands": ["pulumi"]
     },
     {
+      "id": "pusher",
+      "name": "Pusher",
+      "category": "communication",
+      "statusPage": "https://status.pusher.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.pusher.com/api/v2/status.json",
+        "summary": "https://status.pusher.com/api/v2/summary.json",
+        "unresolved": "https://status.pusher.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.pusher.com/history.atom",
+        "rss": "https://status.pusher.com/history.rss"
+      },
+      "hosts": ["*.pusher.com", "*.pusherapp.com"]
+    },
+    {
       "id": "pypi",
       "name": "PyPI",
       "category": "registry",
@@ -1611,6 +2107,21 @@
       "hosts": ["api.replicate.com", "replicate.com", "replicate.delivery"],
       "components": ["Replicate"],
       "notes": "Replicate is now on the Cloudflare status page (replicatestatus.com redirects there). Filter summary.json components for \"Replicate\"; the page is large."
+    },
+    {
+      "id": "replit",
+      "name": "Replit",
+      "category": "hosting",
+      "statusPage": "https://status.replit.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.replit.com/api/v2/status.json",
+        "summary": "https://status.replit.com/api/v2/summary.json",
+        "unresolved": "https://status.replit.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.replit.com/history.atom",
+        "rss": "https://status.replit.com/history.rss"
+      },
+      "hosts": ["replit.com", "*.replit.dev", "*.replit.app"]
     },
     {
       "id": "resend",
@@ -1706,6 +2217,22 @@
       "commands": ["scw"]
     },
     {
+      "id": "segment",
+      "name": "Segment",
+      "category": "observability",
+      "statusPage": "https://status.segment.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.segment.com/api/v2/status.json",
+        "summary": "https://status.segment.com/api/v2/summary.json",
+        "unresolved": "https://status.segment.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.segment.com/history.atom",
+        "rss": "https://status.segment.com/history.rss"
+      },
+      "hosts": ["api.segment.io", "cdn.segment.com", "app.segment.com", "*.segmentapis.com"],
+      "notes": "Components are split by region suffix (US) / (EU)."
+    },
+    {
       "id": "semaphore",
       "name": "Semaphore CI",
       "category": "ci",
@@ -1748,6 +2275,53 @@
         "US Transaction Ingestion",
         "EU Transaction Ingestion"
       ]
+    },
+    {
+      "id": "shippo",
+      "name": "Shippo",
+      "category": "other",
+      "statusPage": "https://status.goshippo.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.goshippo.com/api/v2/status.json",
+        "summary": "https://status.goshippo.com/api/v2/summary.json",
+        "unresolved": "https://status.goshippo.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.goshippo.com/history.atom",
+        "rss": "https://status.goshippo.com/history.rss"
+      },
+      "hosts": ["api.goshippo.com"],
+      "notes": "Per-carrier components (USPS, UPS, FedEx, ...): a carrier row can be degraded while the Shippo API is fine."
+    },
+    {
+      "id": "shipstation",
+      "name": "ShipStation",
+      "category": "other",
+      "statusPage": "https://status.shipstation.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.shipstation.com/api/v2/status.json",
+        "summary": "https://status.shipstation.com/api/v2/summary.json",
+        "unresolved": "https://status.shipstation.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.shipstation.com/history.atom",
+        "rss": "https://status.shipstation.com/history.rss"
+      },
+      "hosts": ["ssapi.shipstation.com", "api.shipstation.com"]
+    },
+    {
+      "id": "shopify",
+      "name": "Shopify",
+      "category": "other",
+      "statusPage": "https://www.shopifystatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.shopifystatus.com/api/v2/status.json",
+        "summary": "https://www.shopifystatus.com/api/v2/summary.json",
+        "unresolved": "https://www.shopifystatus.com/api/v2/incidents/unresolved.json"
+      },
+      "hosts": ["*.myshopify.com", "admin.shopify.com", "partners.shopify.com", "cdn.shopify.com"],
+      "commands": ["shopify"],
+      "components": ["API & Mobile", "Admin", "Checkout", "Storefront"],
+      "notes": "history.atom / history.rss redirect (302) elsewhere; use unresolved."
     },
     {
       "id": "shortcut",
@@ -1889,6 +2463,22 @@
       "components": ["Stripe API", "Global payments"]
     },
     {
+      "id": "sumologic",
+      "name": "Sumo Logic",
+      "category": "observability",
+      "statusPage": "https://status.sumologic.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.sumologic.com/api/v2/status.json",
+        "summary": "https://status.sumologic.com/api/v2/summary.json",
+        "unresolved": "https://status.sumologic.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.sumologic.com/history.atom",
+        "rss": "https://status.sumologic.com/history.rss"
+      },
+      "hosts": ["*.sumologic.com"],
+      "notes": "Components repeat per deployment region (APIs appears once per region)."
+    },
+    {
       "id": "supabase",
       "name": "Supabase",
       "category": "database",
@@ -1934,6 +2524,23 @@
         "proxy": "https://status.tavily.com/proxy/status.tavily.com"
       },
       "hosts": ["api.tavily.com"]
+    },
+    {
+      "id": "temporal",
+      "name": "Temporal Cloud",
+      "category": "cloud",
+      "statusPage": "https://status.temporal.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.temporal.io/api/v2/status.json",
+        "summary": "https://status.temporal.io/api/v2/summary.json",
+        "unresolved": "https://status.temporal.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.temporal.io/history.atom",
+        "rss": "https://status.temporal.io/history.rss"
+      },
+      "hosts": ["*.tmprl.cloud", "cloud.temporal.io"],
+      "commands": ["tcld"],
+      "notes": "Components are cloud regions (us-east4, ap-northeast-1, ...) plus Web UI and Cloud Ops API."
     },
     {
       "id": "together-ai",

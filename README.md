@@ -9,7 +9,7 @@ It has three parts and needs no server:
 
 - **A skill** (`service-status`). It triggers on outage-shaped failures (5xx, `RPC failed`, `ECONNRESET`, 529 overloaded, release-download timeouts) and stays out of lookalikes (sandbox denials, 401/404, rate limits, mocked 500s in tests). It contains minimal-fetch recipes for every status-page format and [worked scenarios](plugins/service-status/skills/service-status/references/scenarios.md) drawn from real agent sessions.
 - **A hook** (`PostToolUse` / `PostToolUseFailure` on Bash). It makes no network calls. When a network command fails like an outage, it adds one line telling the agent which service is likely affected and to use the skill before changing code. It repeats at most once per service every 10 minutes.
-- **An open directory** of status endpoints: **[`services.json`](plugins/service-status/skills/service-status/services.json)**. It has 134 services, and every URL is checked live. PRs are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+- **An open directory** of status endpoints: **[`services.json`](plugins/service-status/skills/service-status/services.json)**. It has 172 services, and every URL is checked live. PRs are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Install
 
