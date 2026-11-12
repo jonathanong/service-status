@@ -15,7 +15,8 @@
     "check": "pnpm lint && pnpm fmt:check && pnpm validate:offline && pnpm test",
     "sync": "node scripts/validate-services.js --skip-ping --sync",
     "eval:summary": "node scripts/eval-summary.js",
-    "eval:prepare": "rm -rf evals/skills evals/hooks && cp -R plugins/service-status/skills evals/skills && cp -R plugins/service-status-hook/hooks evals/hooks"
+    "eval:prepare": "rm -rf evals/skills evals/hooks && cp -R plugins/service-status/skills evals/skills && cp -R plugins/service-status-hook/hooks evals/hooks",
+    "evals": "pnpm eval:prepare && cd evals && claude plugin eval . --trust-plugin"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "^5.1.0",

@@ -11,12 +11,13 @@ These are `claude plugin eval` cases for the `service-status` skill and hook. Th
 Cases tagged `holdout` were written after the skill description and weren't used to tune it.
 
 ```sh
-pnpm eval:prepare     # from the repo root: copies the skill and hook into evals/ (gitignored)
-cd evals
-claude plugin eval . --allow-tools Bash --trust-plugin                                   # outage + lookalike cases, with a no-plugin baseline
-claude plugin eval . --tag agentic --scaffold --allow-tools Bash Edit Write --trust-plugin
-claude plugin eval . --runs 1 --ablation none --case 'outage-*' --allow-tools Bash      # cheap iteration
+# from the repo root; extra flags go to `claude plugin eval`
+pnpm evals --allow-tools Bash                                          # outage + lookalike cases, with a no-plugin baseline
+pnpm evals --tag agentic --scaffold --allow-tools Bash Edit Write
+pnpm evals --runs 1 --ablation none --case 'outage-*' --allow-tools Bash   # cheap iteration
 ```
+
+`pnpm evals` first copies the current skill and hook into `evals/skills` and `evals/hooks` (gitignored), so a run always tests the working tree. Don't run `claude plugin eval evals` directly, because those copies may be stale.
 
 ## Limits
 

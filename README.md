@@ -98,7 +98,7 @@ pnpm install
 pnpm check                 # oxlint, oxfmt, offline directory validation, tests (100% coverage)
 pnpm validate              # also fetches every endpoint in services.json
 pnpm sync                  # copy services.json into the hook plugin after editing it
-pnpm eval:prepare && claude plugin eval evals --allow-tools Bash --trust-plugin    # model evals; costs API credits
+pnpm evals --allow-tools Bash   # model evals against the current skill + hook; costs API credits
 ```
 
 ## Related
