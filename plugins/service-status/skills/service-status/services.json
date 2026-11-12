@@ -15,8 +15,7 @@
         "atom": "https://status.1password.com/history.atom",
         "rss": "https://status.1password.com/history.rss"
       },
-      "hosts": ["*.1password.com", "*.1password.eu", "*.1password.ca"],
-      "commands": ["op"]
+      "hosts": ["*.1password.com", "*.1password.eu", "*.1password.ca"]
     },
     {
       "id": "ably",
@@ -31,7 +30,7 @@
         "atom": "https://status.ably.com/history.atom",
         "rss": "https://status.ably.com/history.rss"
       },
-      "hosts": ["*.ably.io", "*.ably-realtime.com"]
+      "hosts": ["*.ably.io", "*.ably.net", "*.ably-realtime.com"]
     },
     {
       "id": "airtable",
@@ -319,7 +318,7 @@
         "atom": "https://status.box.com/history.atom",
         "rss": "https://status.box.com/history.rss"
       },
-      "hosts": ["api.box.com", "upload.box.com", "app.box.com", "account.box.com"]
+      "hosts": ["api.box.com", "upload.box.com", "app.box.com", "account.box.com", "*.boxcloud.com"]
     },
     {
       "id": "browserbase",
@@ -781,8 +780,8 @@
         "summary": "https://status.getdbt.com/api/v2/summary.json",
         "proxy": "https://status.getdbt.com/proxy/status.getdbt.com"
       },
-      "hosts": ["cloud.getdbt.com", "*.getdbt.com", "*.dbt.com"],
-      "notes": "No history.atom / history.rss (404); use proxy for incident names."
+      "hosts": ["cloud.getdbt.com", "*.dbt.com"],
+      "notes": "No history.atom / history.rss (404); use proxy for incident names. Covers dbt Cloud only: hub.getdbt.com (dbt deps) and docs.getdbt.com are not components."
     },
     {
       "id": "deepgram",
@@ -1006,7 +1005,7 @@
         "rss": "https://status.expo.dev/history.rss"
       },
       "hosts": ["expo.dev", "api.expo.dev", "u.expo.dev", "exp.host"],
-      "commands": ["eas", "expo"],
+      "commands": ["eas"],
       "components": ["EAS Build", "EAS Submit", "EAS Update", "EAS Workflows", "Dev Tools API"],
       "notes": "Also mirrors upstream components (GitHub, Google Cloud, Cloudflare, AWS S3, npm); judge by the EAS rows."
     },
@@ -1225,14 +1224,21 @@
         "atom": "https://status.gradle.com/history.atom",
         "rss": "https://status.gradle.com/history.rss"
       },
-      "hosts": ["services.gradle.org", "scans.gradle.com", "ge.gradle.org", "registry.gradle.com"],
-      "commands": ["gradle", "gradlew"],
+      "hosts": [
+        "services.gradle.org",
+        "plugins.gradle.org",
+        "scans.gradle.com",
+        "ge.gradle.org",
+        "registry.gradle.com"
+      ],
+      "commands": ["gradlew"],
       "components": [
+        "Gradle Plugin portal (plugins.gradle.org)",
         "Downloads (services.gradle.org)",
         "Public Build Scan service (scans.gradle.com)",
         "Gradle's Maven Central redirect"
       ],
-      "notes": "The Gradle Plugin Portal (plugins.gradle.org) is not a component here."
+      "notes": "Several components are groups (Gradle Plugin portal, Develocity, Gradle Build Tool); keep group rows when reading summary.json. The bare `gradle` command is matched by maven-central, since most dependency failures come from Maven Central."
     },
     {
       "id": "grafana-cloud",
@@ -1600,12 +1606,11 @@
         "*.office.com",
         "*.sharepoint.com",
         "teams.microsoft.com",
-        "*.teams.microsoft.com",
         "graph.microsoft.com",
         "*.protection.outlook.com"
       ],
       "commands": ["m365"],
-      "notes": "Public page is only updated for large incidents (when tenant admins may not reach Service health). Status 'Available' with Title null means no such incident, not that your tenant is healthy; tenant-level health is in the admin center (portal.office.com, login required). Entra ID sign-in (login.microsoftonline.com) is listed under azure."
+      "notes": "Public page is only updated for large incidents (when tenant admins may not reach Service health). Status 'Available' with Title null means no such incident, not that your tenant is healthy; tenant-level health is in the admin center (portal.office.com, login required). Entra ID sign-in (login.microsoftonline.com) is listed under azure. graph.microsoft.com and *.protection.outlook.com errors are usually tenant-specific (auth, throttling, mail policy); only treat them as an outage when this page shows an incident."
     },
     {
       "id": "miro",
