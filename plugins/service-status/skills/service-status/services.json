@@ -1206,10 +1206,20 @@
         "calendar.google.com",
         "meet.google.com",
         "chat.google.com",
-        "script.google.com"
+        "script.google.com",
+        "gmail.googleapis.com",
+        "sheets.googleapis.com",
+        "docs.googleapis.com",
+        "drive.googleapis.com",
+        "slides.googleapis.com",
+        "forms.googleapis.com",
+        "chat.googleapis.com",
+        "admin.googleapis.com",
+        "script.googleapis.com",
+        "people.googleapis.com"
       ],
       "commands": ["gam"],
-      "notes": "Same incidents.json / feed.atom format as Google Cloud (active = end == null). Workspace API hosts such as gmail.googleapis.com also match the gcp entry; check both."
+      "notes": "Same incidents.json / feed.atom format as Google Cloud (active = end == null). Workspace API hosts (gmail.googleapis.com, drive.googleapis.com, ...) also match the gcp entry via *.googleapis.com; check both pages."
     },
     {
       "id": "gradle",
