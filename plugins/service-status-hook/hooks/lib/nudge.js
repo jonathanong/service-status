@@ -9,7 +9,7 @@ import { classify } from "./classify.js";
 import { loadServices, matchServices, serviceMentioner, statusUrl } from "./services.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
-export const DEFAULT_SERVICES = join(here, "..", "..", "skills", "service-status", "services.json");
+export const DEFAULT_SERVICES = join(here, "..", "services.json");
 const QUIET_MS = 10 * 60 * 1000;
 
 // Claude Code sends failures as PostToolUseFailure with `error`; Codex sends

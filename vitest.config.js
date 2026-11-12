@@ -8,7 +8,7 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "lcov"],
-      include: ["plugins/service-status/hooks/lib/**/*.js", "scripts/lib/**/*.js"],
+      include: ["plugins/service-status-hook/hooks/lib/**/*.js", "scripts/lib/**/*.js"],
       thresholds: { lines: 100, functions: 100, branches: 100, statements: 100 },
     },
   },

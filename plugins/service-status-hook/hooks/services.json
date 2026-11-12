@@ -1,0 +1,2148 @@
+{
+  "$schema": "./services.schema.json",
+  "version": 1,
+  "services": [
+    {
+      "id": "airtable",
+      "name": "Airtable",
+      "category": "productivity",
+      "statusPage": "https://status.airtable.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.airtable.com/api/v2/status.json",
+        "summary": "https://status.airtable.com/api/v2/summary.json",
+        "unresolved": "https://status.airtable.com/api/v2/incidents/unresolved.json"
+      },
+      "hosts": ["airtable.com", "api.airtable.com"],
+      "notes": "No history feed; status.json and summary.json only."
+    },
+    {
+      "id": "aiven",
+      "name": "Aiven",
+      "category": "database",
+      "statusPage": "https://status.aiven.io",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.aiven.io/api/v2/status.json",
+        "summary": "https://status.aiven.io/api/v2/summary.json",
+        "atom": "https://status.aiven.io/history.atom",
+        "rss": "https://status.aiven.io/history.rss",
+        "proxy": "https://status.aiven.io/proxy/status.aiven.io"
+      },
+      "hosts": ["api.aiven.io", "console.aiven.io", "*.aivencloud.com"],
+      "commands": ["avn"]
+    },
+    {
+      "id": "akamai",
+      "name": "Akamai",
+      "category": "cloud",
+      "statusPage": "https://www.akamaistatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.akamaistatus.com/api/v2/status.json",
+        "summary": "https://www.akamaistatus.com/api/v2/summary.json",
+        "unresolved": "https://www.akamaistatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.akamaistatus.com/history.atom",
+        "rss": "https://www.akamaistatus.com/history.rss"
+      },
+      "hosts": ["*.akamaihd.net", "*.akamaized.net"]
+    },
+    {
+      "id": "anaconda",
+      "name": "Anaconda",
+      "category": "registry",
+      "statusPage": "https://anaconda.statuspage.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://anaconda.statuspage.io/api/v2/status.json",
+        "summary": "https://anaconda.statuspage.io/api/v2/summary.json",
+        "unresolved": "https://anaconda.statuspage.io/api/v2/incidents/unresolved.json",
+        "atom": "https://anaconda.statuspage.io/history.atom",
+        "rss": "https://anaconda.statuspage.io/history.rss"
+      },
+      "hosts": ["anaconda.org", "conda.anaconda.org", "repo.anaconda.com"],
+      "commands": ["conda", "mamba"]
+    },
+    {
+      "id": "anthropic",
+      "name": "Anthropic",
+      "category": "ai",
+      "statusPage": "https://status.claude.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.claude.com/api/v2/status.json",
+        "summary": "https://status.claude.com/api/v2/summary.json",
+        "unresolved": "https://status.claude.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.claude.com/history.atom",
+        "rss": "https://status.claude.com/history.rss"
+      },
+      "hosts": ["api.anthropic.com", "claude.ai", "console.anthropic.com", "platform.claude.com"],
+      "commands": ["claude"],
+      "components": [
+        "Claude API (api.anthropic.com)",
+        "Claude Code",
+        "claude.ai",
+        "Claude Console (platform.claude.com)"
+      ],
+      "notes": "Page is now status.claude.com; status.anthropic.com is the legacy name."
+    },
+    {
+      "id": "apple-developer",
+      "name": "Apple Developer",
+      "category": "other",
+      "statusPage": "https://developer.apple.com/system-status/",
+      "adapter": "apple",
+      "endpoints": {
+        "status": "https://www.apple.com/support/systemstatus/data/developer/system_status_en_US.js"
+      },
+      "hosts": [
+        "developer.apple.com",
+        "appstoreconnect.apple.com",
+        "api.appstoreconnect.apple.com",
+        "*.push.apple.com"
+      ],
+      "commands": ["xcodebuild", "xcrun", "fastlane", "altool"],
+      "notes": "Response is JSONP (jsonCallback(...)); strip the wrapper before jq. Each service has events[]; an event with eventStatus != \"resolved\" is active."
+    },
+    {
+      "id": "atlassian",
+      "name": "Atlassian (umbrella)",
+      "category": "productivity",
+      "statusPage": "https://status.atlassian.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.atlassian.com/api/v2/status.json",
+        "summary": "https://status.atlassian.com/api/v2/summary.json",
+        "unresolved": "https://status.atlassian.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.atlassian.com/history.atom",
+        "rss": "https://status.atlassian.com/history.rss"
+      },
+      "hosts": ["api.atlassian.com", "id.atlassian.com", "*.atlassian.net"],
+      "notes": "Umbrella page that only shows cross-product incidents. Use the per-product pages (jira, confluence, bitbucket, trello) for product incidents."
+    },
+    {
+      "id": "auth0",
+      "name": "Auth0",
+      "category": "other",
+      "statusPage": "https://auth0.statuspage.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://auth0.statuspage.io/api/v2/status.json",
+        "summary": "https://auth0.statuspage.io/api/v2/summary.json",
+        "unresolved": "https://auth0.statuspage.io/api/v2/incidents/unresolved.json",
+        "atom": "https://auth0.statuspage.io/history.atom",
+        "rss": "https://auth0.statuspage.io/history.rss"
+      },
+      "hosts": ["*.auth0.com"],
+      "notes": "Endpoints use auth0.statuspage.io (page.url reports status.auth0.com; that host does not serve /api/v2)."
+    },
+    {
+      "id": "aws",
+      "name": "Amazon Web Services",
+      "category": "cloud",
+      "statusPage": "https://health.aws.amazon.com/health/status",
+      "adapter": "aws",
+      "endpoints": {
+        "events": "https://health.aws.amazon.com/public/currentevents",
+        "rss": "https://status.aws.amazon.com/rss/all.rss"
+      },
+      "hosts": ["*.amazonaws.com", "*.aws.amazon.com", "*.cloudfront.net"],
+      "commands": ["aws", "sam", "cdk", "terraform"],
+      "notes": "One entry for all AWS services/regions. Filter by event.service (e.g. \"ec2-us-east-1\") or region_name. Response is UTF-16BE JSON; decode with iconv. Active events have status != \"0\"."
+    },
+    {
+      "id": "azure",
+      "name": "Microsoft Azure",
+      "category": "cloud",
+      "statusPage": "https://azure.status.microsoft/en-us/status/",
+      "adapter": "azure",
+      "endpoints": {
+        "rss": "https://azure.status.microsoft/en-us/status/feed/"
+      },
+      "hosts": [
+        "*.azure.com",
+        "*.azurewebsites.net",
+        "*.windows.net",
+        "*.azurecr.io",
+        "management.azure.com",
+        "login.microsoftonline.com"
+      ],
+      "commands": ["az", "azd"],
+      "notes": "Feed lists only active incidents (577 bytes when empty). Region and service appear in the item title/description."
+    },
+    {
+      "id": "azure-devops",
+      "name": "Azure DevOps",
+      "category": "source-control",
+      "statusPage": "https://status.dev.azure.com",
+      "adapter": "azure-devops",
+      "endpoints": {
+        "status": "https://status.dev.azure.com/_apis/status/health?api-version=6.0-preview.1"
+      },
+      "hosts": ["dev.azure.com", "*.visualstudio.com", "pkgs.dev.azure.com"],
+      "components": ["Core services", "Boards", "Repos", "Pipelines", "Artifacts", "Test Plans"],
+      "notes": "Services have a per-geography health array; filter .services[].geographies[] by health != \"healthy\"."
+    },
+    {
+      "id": "baseten",
+      "name": "Baseten",
+      "category": "ai",
+      "statusPage": "https://status.baseten.co",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.baseten.co/api/v2/status.json",
+        "summary": "https://status.baseten.co/api/v2/summary.json",
+        "unresolved": "https://status.baseten.co/api/v2/incidents/unresolved.json",
+        "atom": "https://status.baseten.co/history.atom",
+        "rss": "https://status.baseten.co/history.rss"
+      },
+      "hosts": ["*.baseten.co"]
+    },
+    {
+      "id": "bitbucket",
+      "name": "Bitbucket",
+      "category": "source-control",
+      "statusPage": "https://bitbucket.status.atlassian.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://bitbucket.status.atlassian.com/api/v2/status.json",
+        "summary": "https://bitbucket.status.atlassian.com/api/v2/summary.json",
+        "unresolved": "https://bitbucket.status.atlassian.com/api/v2/incidents/unresolved.json",
+        "atom": "https://bitbucket.status.atlassian.com/history.atom",
+        "rss": "https://bitbucket.status.atlassian.com/history.rss"
+      },
+      "hosts": ["bitbucket.org", "api.bitbucket.org"],
+      "components": ["Git via SSH", "Git via HTTPS", "API", "Pipelines", "Webhooks"],
+      "notes": "Runs on the Atlassian page family; separate from the status.atlassian.com umbrella page."
+    },
+    {
+      "id": "bitrise",
+      "name": "Bitrise",
+      "category": "ci",
+      "statusPage": "https://status.bitrise.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.bitrise.io/api/v2/status.json",
+        "summary": "https://status.bitrise.io/api/v2/summary.json",
+        "unresolved": "https://status.bitrise.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.bitrise.io/history.atom",
+        "rss": "https://status.bitrise.io/history.rss"
+      },
+      "hosts": ["bitrise.io", "api.bitrise.io"]
+    },
+    {
+      "id": "browserbase",
+      "name": "Browserbase",
+      "category": "ai",
+      "statusPage": "https://status.browserbase.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.browserbase.com/api/v2/status.json",
+        "summary": "https://status.browserbase.com/api/v2/summary.json",
+        "atom": "https://status.browserbase.com/history.atom",
+        "rss": "https://status.browserbase.com/history.rss",
+        "proxy": "https://status.browserbase.com/proxy/status.browserbase.com"
+      },
+      "hosts": ["api.browserbase.com", "browserbase.com"]
+    },
+    {
+      "id": "browserstack",
+      "name": "BrowserStack",
+      "category": "ci",
+      "statusPage": "https://status.browserstack.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.browserstack.com/api/v2/status.json",
+        "summary": "https://status.browserstack.com/api/v2/summary.json",
+        "unresolved": "https://status.browserstack.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.browserstack.com/history.atom",
+        "rss": "https://status.browserstack.com/history.rss"
+      },
+      "hosts": ["browserstack.com", "hub.browserstack.com", "api.browserstack.com"]
+    },
+    {
+      "id": "bugsnag",
+      "name": "Bugsnag",
+      "category": "observability",
+      "statusPage": "https://bugsnag.statuspage.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://bugsnag.statuspage.io/api/v2/status.json",
+        "summary": "https://bugsnag.statuspage.io/api/v2/summary.json",
+        "unresolved": "https://bugsnag.statuspage.io/api/v2/incidents/unresolved.json",
+        "atom": "https://bugsnag.statuspage.io/history.atom",
+        "rss": "https://bugsnag.statuspage.io/history.rss"
+      },
+      "hosts": ["*.bugsnag.com"],
+      "notes": "Endpoints use bugsnag.statuspage.io (page.url reports bugsnag.status.smartbear.com); status.bugsnag.com did not resolve from the verifying machine."
+    },
+    {
+      "id": "buildkite",
+      "name": "Buildkite",
+      "category": "ci",
+      "statusPage": "https://buildkite.statuspage.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://buildkite.statuspage.io/api/v2/status.json",
+        "summary": "https://buildkite.statuspage.io/api/v2/summary.json",
+        "unresolved": "https://buildkite.statuspage.io/api/v2/incidents/unresolved.json",
+        "atom": "https://buildkite.statuspage.io/history.atom",
+        "rss": "https://buildkite.statuspage.io/history.rss"
+      },
+      "hosts": ["buildkite.com", "agent.buildkite.com", "api.buildkite.com"],
+      "components": ["REST API", "Agent API", "Hosted Agents"]
+    },
+    {
+      "id": "bunny",
+      "name": "Bunny.net",
+      "category": "cloud",
+      "statusPage": "https://status.bunny.net",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.bunny.net/api/v2/status.json",
+        "summary": "https://status.bunny.net/api/v2/summary.json",
+        "unresolved": "https://status.bunny.net/api/v2/incidents/unresolved.json",
+        "atom": "https://status.bunny.net/history.atom",
+        "rss": "https://status.bunny.net/history.rss"
+      },
+      "hosts": ["bunny.net", "*.b-cdn.net"]
+    },
+    {
+      "id": "cerebras",
+      "name": "Cerebras",
+      "category": "ai",
+      "statusPage": "https://status.cerebras.ai",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.cerebras.ai/api/v2/status.json",
+        "summary": "https://status.cerebras.ai/api/v2/summary.json",
+        "unresolved": "https://status.cerebras.ai/api/v2/incidents/unresolved.json",
+        "atom": "https://status.cerebras.ai/history.atom",
+        "rss": "https://status.cerebras.ai/history.rss"
+      },
+      "hosts": ["api.cerebras.ai"]
+    },
+    {
+      "id": "circleci",
+      "name": "CircleCI",
+      "category": "ci",
+      "statusPage": "https://status.circleci.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.circleci.com/api/v2/status.json",
+        "summary": "https://status.circleci.com/api/v2/summary.json",
+        "unresolved": "https://status.circleci.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.circleci.com/history.atom",
+        "rss": "https://status.circleci.com/history.rss"
+      },
+      "hosts": ["circleci.com", "*.circleci.com"],
+      "components": [
+        "Docker Jobs",
+        "Machine Jobs",
+        "macOS Jobs",
+        "Windows Jobs",
+        "Pipelines & Workflows"
+      ]
+    },
+    {
+      "id": "clerk",
+      "name": "Clerk",
+      "category": "other",
+      "statusPage": "https://status.clerk.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.clerk.com/api/v2/status.json",
+        "summary": "https://status.clerk.com/api/v2/summary.json",
+        "atom": "https://status.clerk.com/history.atom",
+        "rss": "https://status.clerk.com/history.rss",
+        "proxy": "https://status.clerk.com/proxy/status.clerk.com"
+      },
+      "hosts": ["clerk.com", "api.clerk.com", "*.clerk.accounts.dev"]
+    },
+    {
+      "id": "clickhouse",
+      "name": "ClickHouse Cloud",
+      "category": "database",
+      "statusPage": "https://status.clickhouse.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.clickhouse.com/api/v2/status.json",
+        "summary": "https://status.clickhouse.com/api/v2/summary.json",
+        "atom": "https://status.clickhouse.com/history.atom",
+        "rss": "https://status.clickhouse.com/history.rss",
+        "proxy": "https://status.clickhouse.com/proxy/status.clickhouse.com"
+      },
+      "hosts": ["*.clickhouse.cloud"]
+    },
+    {
+      "id": "cloudbees",
+      "name": "CloudBees",
+      "category": "ci",
+      "statusPage": "https://www.cloudbeesstatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.cloudbeesstatus.com/api/v2/status.json",
+        "summary": "https://www.cloudbeesstatus.com/api/v2/summary.json",
+        "unresolved": "https://www.cloudbeesstatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.cloudbeesstatus.com/history.atom",
+        "rss": "https://www.cloudbeesstatus.com/history.rss"
+      },
+      "hosts": ["cloudbees.com", "*.cloudbees.com"]
+    },
+    {
+      "id": "cloudflare",
+      "name": "Cloudflare",
+      "category": "cloud",
+      "statusPage": "https://www.cloudflarestatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.cloudflarestatus.com/api/v2/status.json",
+        "summary": "https://www.cloudflarestatus.com/api/v2/summary.json",
+        "unresolved": "https://www.cloudflarestatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.cloudflarestatus.com/history.atom",
+        "rss": "https://www.cloudflarestatus.com/history.rss"
+      },
+      "hosts": [
+        "cloudflare.com",
+        "api.cloudflare.com",
+        "*.workers.dev",
+        "*.pages.dev",
+        "*.r2.cloudflarestorage.com"
+      ],
+      "commands": ["wrangler", "cloudflared"],
+      "components": ["Workers", "Pages", "R2", "Workers AI", "AI Gateway", "Registrar"],
+      "notes": "summary.json is ~225KB because every data centre is a component, and DCs show non-operational during routine maintenance. Prefer status.json, unresolved.json, or filter summary by named products."
+    },
+    {
+      "id": "cloudinary",
+      "name": "Cloudinary",
+      "category": "other",
+      "statusPage": "https://status.cloudinary.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.cloudinary.com/api/v2/status.json",
+        "summary": "https://status.cloudinary.com/api/v2/summary.json",
+        "unresolved": "https://status.cloudinary.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.cloudinary.com/history.atom",
+        "rss": "https://status.cloudinary.com/history.rss"
+      },
+      "hosts": ["api.cloudinary.com", "res.cloudinary.com"]
+    },
+    {
+      "id": "cloudsmith",
+      "name": "Cloudsmith",
+      "category": "registry",
+      "statusPage": "https://status.cloudsmith.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.cloudsmith.com/api/v2/status.json",
+        "summary": "https://status.cloudsmith.com/api/v2/summary.json",
+        "atom": "https://status.cloudsmith.com/history.atom",
+        "rss": "https://status.cloudsmith.com/history.rss",
+        "proxy": "https://status.cloudsmith.com/proxy/status.cloudsmith.com"
+      },
+      "hosts": ["cloudsmith.io", "*.cloudsmith.io"]
+    },
+    {
+      "id": "cockroachdb",
+      "name": "CockroachDB Cloud",
+      "category": "database",
+      "statusPage": "https://status.cockroachlabs.cloud",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.cockroachlabs.cloud/api/v2/status.json",
+        "summary": "https://status.cockroachlabs.cloud/api/v2/summary.json",
+        "unresolved": "https://status.cockroachlabs.cloud/api/v2/incidents/unresolved.json",
+        "atom": "https://status.cockroachlabs.cloud/history.atom",
+        "rss": "https://status.cockroachlabs.cloud/history.rss"
+      },
+      "hosts": ["*.cockroachlabs.cloud"],
+      "commands": ["cockroach", "ccloud"]
+    },
+    {
+      "id": "cocoapods",
+      "name": "CocoaPods",
+      "category": "registry",
+      "statusPage": "https://status.cocoapods.org",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.cocoapods.org/api/v2/status.json",
+        "summary": "https://status.cocoapods.org/api/v2/summary.json",
+        "unresolved": "https://status.cocoapods.org/api/v2/incidents/unresolved.json",
+        "atom": "https://status.cocoapods.org/history.atom",
+        "rss": "https://status.cocoapods.org/history.rss"
+      },
+      "hosts": ["cdn.cocoapods.org", "trunk.cocoapods.org"],
+      "commands": ["pod"]
+    },
+    {
+      "id": "codecov",
+      "name": "Codecov",
+      "category": "ci",
+      "statusPage": "https://status.codecov.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.codecov.com/api/v2/status.json",
+        "summary": "https://status.codecov.com/api/v2/summary.json",
+        "unresolved": "https://status.codecov.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.codecov.com/history.atom",
+        "rss": "https://status.codecov.com/history.rss"
+      },
+      "hosts": ["codecov.io", "api.codecov.io", "cli.codecov.io"],
+      "commands": ["codecov"]
+    },
+    {
+      "id": "codefresh",
+      "name": "Codefresh",
+      "category": "ci",
+      "statusPage": "https://status.codefresh.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.codefresh.io/api/v2/status.json",
+        "summary": "https://status.codefresh.io/api/v2/summary.json",
+        "unresolved": "https://status.codefresh.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.codefresh.io/history.atom",
+        "rss": "https://status.codefresh.io/history.rss"
+      },
+      "hosts": ["g.codefresh.io", "codefresh.io"]
+    },
+    {
+      "id": "cohere",
+      "name": "Cohere",
+      "category": "ai",
+      "statusPage": "https://status.cohere.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.cohere.com/api/v2/status.json",
+        "summary": "https://status.cohere.com/api/v2/summary.json",
+        "atom": "https://status.cohere.com/history.atom",
+        "rss": "https://status.cohere.com/history.rss",
+        "proxy": "https://status.cohere.com/proxy/status.cohere.com"
+      },
+      "hosts": ["api.cohere.com", "api.cohere.ai"]
+    },
+    {
+      "id": "conan-center",
+      "name": "Conan Center",
+      "category": "registry",
+      "statusPage": "https://status.conan.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.conan.io/api/v2/status.json",
+        "summary": "https://status.conan.io/api/v2/summary.json",
+        "unresolved": "https://status.conan.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.conan.io/history.atom",
+        "rss": "https://status.conan.io/history.rss"
+      },
+      "hosts": ["center2.conan.io", "center.conan.io"],
+      "commands": ["conan"]
+    },
+    {
+      "id": "confluence",
+      "name": "Confluence",
+      "category": "productivity",
+      "statusPage": "https://confluence.status.atlassian.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://confluence.status.atlassian.com/api/v2/status.json",
+        "summary": "https://confluence.status.atlassian.com/api/v2/summary.json",
+        "unresolved": "https://confluence.status.atlassian.com/api/v2/incidents/unresolved.json",
+        "atom": "https://confluence.status.atlassian.com/history.atom",
+        "rss": "https://confluence.status.atlassian.com/history.rss"
+      },
+      "hosts": ["*.atlassian.net"]
+    },
+    {
+      "id": "contentful",
+      "name": "Contentful",
+      "category": "other",
+      "statusPage": "https://www.contentfulstatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.contentfulstatus.com/api/v2/status.json",
+        "summary": "https://www.contentfulstatus.com/api/v2/summary.json",
+        "unresolved": "https://www.contentfulstatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.contentfulstatus.com/history.atom",
+        "rss": "https://www.contentfulstatus.com/history.rss"
+      },
+      "hosts": ["api.contentful.com", "cdn.contentful.com"]
+    },
+    {
+      "id": "convex",
+      "name": "Convex",
+      "category": "database",
+      "statusPage": "https://status.convex.dev",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.convex.dev/api/v2/status.json",
+        "summary": "https://status.convex.dev/api/v2/summary.json",
+        "unresolved": "https://status.convex.dev/api/v2/incidents/unresolved.json",
+        "atom": "https://status.convex.dev/history.atom",
+        "rss": "https://status.convex.dev/history.rss"
+      },
+      "hosts": ["convex.dev", "*.convex.cloud"],
+      "commands": ["convex"]
+    },
+    {
+      "id": "coveralls",
+      "name": "Coveralls",
+      "category": "ci",
+      "statusPage": "https://status.coveralls.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.coveralls.io/api/v2/status.json",
+        "summary": "https://status.coveralls.io/api/v2/summary.json",
+        "unresolved": "https://status.coveralls.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.coveralls.io/history.atom",
+        "rss": "https://status.coveralls.io/history.rss"
+      },
+      "hosts": ["coveralls.io"]
+    },
+    {
+      "id": "crates-io",
+      "name": "crates.io",
+      "category": "registry",
+      "statusPage": "https://status.crates.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.crates.io/api/v2/status.json",
+        "summary": "https://status.crates.io/api/v2/summary.json",
+        "unresolved": "https://status.crates.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.crates.io/history.atom",
+        "rss": "https://status.crates.io/history.rss"
+      },
+      "hosts": ["crates.io", "static.crates.io", "index.crates.io", "docs.rs"],
+      "commands": ["cargo"],
+      "components": ["crates.io", "docs.rs"]
+    },
+    {
+      "id": "datadog",
+      "name": "Datadog",
+      "category": "observability",
+      "statusPage": "https://datadog.statuspage.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://datadog.statuspage.io/api/v2/status.json",
+        "summary": "https://datadog.statuspage.io/api/v2/summary.json",
+        "unresolved": "https://datadog.statuspage.io/api/v2/incidents/unresolved.json",
+        "atom": "https://datadog.statuspage.io/history.atom",
+        "rss": "https://datadog.statuspage.io/history.rss"
+      },
+      "hosts": ["*.datadoghq.com", "*.datadoghq.eu", "*.ddog-gov.com"],
+      "commands": ["datadog-ci"],
+      "notes": "Endpoints use the vendor statuspage.io host (page.url reports status.datadoghq.com). US1 only; other Datadog sites have separate pages. status.datadoghq.com did not resolve from the verifying machine (local DNS), so only the statuspage.io host was verified."
+    },
+    {
+      "id": "deepseek",
+      "name": "DeepSeek",
+      "category": "ai",
+      "statusPage": "https://status.deepseek.com",
+      "adapter": "feed-only",
+      "endpoints": {
+        "atom": "https://status.deepseek.com/feed.atom",
+        "rss": "https://status.deepseek.com/history.rss"
+      },
+      "hosts": ["api.deepseek.com", "chat.deepseek.com"],
+      "notes": "Feed only. Entry titles are bilingual (Chinese/English)."
+    },
+    {
+      "id": "deno",
+      "name": "Deno",
+      "category": "hosting",
+      "statusPage": "https://denostatus.com",
+      "adapter": "instatus",
+      "endpoints": {
+        "status": "https://denostatus.com/summary.json",
+        "components": "https://denostatus.com/v2/components.json",
+        "atom": "https://denostatus.com/history.atom",
+        "rss": "https://denostatus.com/history.rss"
+      },
+      "hosts": ["deno.land", "deno.com", "jsr.io", "*.deno.dev"],
+      "commands": ["deno"],
+      "notes": "Instatus page. Components include \"Module Registry\" and deno.land; JSR itself has no separate status feed (checked jsr.io and status.jsr.io)."
+    },
+    {
+      "id": "depot",
+      "name": "Depot",
+      "category": "ci",
+      "statusPage": "https://status.depot.dev",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.depot.dev/api/v2/status.json",
+        "summary": "https://status.depot.dev/api/v2/summary.json",
+        "atom": "https://status.depot.dev/history.atom",
+        "rss": "https://status.depot.dev/history.rss",
+        "proxy": "https://status.depot.dev/proxy/status.depot.dev"
+      },
+      "hosts": ["depot.dev", "api.depot.dev"],
+      "commands": ["depot"]
+    },
+    {
+      "id": "digitalocean",
+      "name": "DigitalOcean",
+      "category": "cloud",
+      "statusPage": "https://status.digitalocean.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.digitalocean.com/api/v2/status.json",
+        "summary": "https://status.digitalocean.com/api/v2/summary.json",
+        "unresolved": "https://status.digitalocean.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.digitalocean.com/history.atom",
+        "rss": "https://status.digitalocean.com/history.rss"
+      },
+      "hosts": ["api.digitalocean.com", "*.digitaloceanspaces.com", "cloud.digitalocean.com"],
+      "commands": ["doctl"],
+      "notes": "Components repeat per region (hundreds of rows)."
+    },
+    {
+      "id": "discord",
+      "name": "Discord",
+      "category": "communication",
+      "statusPage": "https://discordstatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://discordstatus.com/api/v2/status.json",
+        "summary": "https://discordstatus.com/api/v2/summary.json",
+        "unresolved": "https://discordstatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://discordstatus.com/history.atom",
+        "rss": "https://discordstatus.com/history.rss"
+      },
+      "hosts": ["discord.com", "discordapp.com", "gateway.discord.gg", "cdn.discordapp.com"],
+      "components": ["API", "Gateway", "Media Proxy", "Push Notifications"]
+    },
+    {
+      "id": "docker-hub",
+      "name": "Docker Hub",
+      "category": "registry",
+      "statusPage": "https://www.dockerstatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://www.dockerstatus.com/api/v2/status.json",
+        "summary": "https://www.dockerstatus.com/api/v2/summary.json",
+        "atom": "https://www.dockerstatus.com/history.atom",
+        "rss": "https://www.dockerstatus.com/history.rss",
+        "proxy": "https://www.dockerstatus.com/proxy/www.dockerstatus.com"
+      },
+      "hosts": [
+        "registry-1.docker.io",
+        "hub.docker.com",
+        "auth.docker.io",
+        "index.docker.io",
+        "production.cloudflare.docker.com"
+      ],
+      "commands": ["docker"],
+      "notes": "incident.io-hosted page; use status.json for the yes/no check, proxy for incident names."
+    },
+    {
+      "id": "e2b",
+      "name": "E2B",
+      "category": "ai",
+      "statusPage": "https://status.e2b.dev",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.e2b.dev/api/v2/status.json",
+        "summary": "https://status.e2b.dev/api/v2/summary.json",
+        "atom": "https://status.e2b.dev/history.atom",
+        "rss": "https://status.e2b.dev/history.rss",
+        "proxy": "https://status.e2b.dev/proxy/status.e2b.dev"
+      },
+      "hosts": ["api.e2b.dev", "e2b.dev"]
+    },
+    {
+      "id": "elastic",
+      "name": "Elastic Cloud",
+      "category": "database",
+      "statusPage": "https://status.elastic.co",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.elastic.co/api/v2/status.json",
+        "summary": "https://status.elastic.co/api/v2/summary.json",
+        "unresolved": "https://status.elastic.co/api/v2/incidents/unresolved.json",
+        "atom": "https://status.elastic.co/history.atom",
+        "rss": "https://status.elastic.co/history.rss"
+      },
+      "hosts": ["*.elastic-cloud.com", "cloud.elastic.co"]
+    },
+    {
+      "id": "elevenlabs",
+      "name": "ElevenLabs",
+      "category": "ai",
+      "statusPage": "https://status.elevenlabs.io",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.elevenlabs.io/api/v2/status.json",
+        "summary": "https://status.elevenlabs.io/api/v2/summary.json",
+        "proxy": "https://status.elevenlabs.io/proxy/status.elevenlabs.io"
+      },
+      "hosts": ["api.elevenlabs.io"],
+      "notes": "No history feed; status.json and summary.json only."
+    },
+    {
+      "id": "fastly",
+      "name": "Fastly",
+      "category": "cloud",
+      "statusPage": "https://www.fastlystatus.com",
+      "adapter": "feed-only",
+      "endpoints": {
+        "rss": "https://www.fastlystatus.com/rss"
+      },
+      "hosts": ["api.fastly.com", "*.fastly.net"],
+      "commands": ["fastly"],
+      "notes": "Feed only; /rss is ~98KB and ignores Range, so pipe through head. The human page returns 403 to non-browser clients; the feed does not."
+    },
+    {
+      "id": "figma",
+      "name": "Figma",
+      "category": "productivity",
+      "statusPage": "https://status.figma.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.figma.com/api/v2/status.json",
+        "summary": "https://status.figma.com/api/v2/summary.json",
+        "unresolved": "https://status.figma.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.figma.com/history.atom",
+        "rss": "https://status.figma.com/history.rss"
+      },
+      "hosts": ["figma.com", "api.figma.com"],
+      "components": ["REST API", "Dev Mode", "MCP", "Figma Design", "Plugins & Widgets"]
+    },
+    {
+      "id": "firebase",
+      "name": "Firebase",
+      "category": "cloud",
+      "statusPage": "https://status.firebase.google.com",
+      "adapter": "gcp",
+      "endpoints": {
+        "events": "https://status.firebase.google.com/incidents.json",
+        "atom": "https://status.firebase.google.com/feed.atom"
+      },
+      "hosts": ["*.firebaseio.com", "*.firebaseapp.com", "*.web.app", "firebase.googleapis.com"],
+      "commands": ["firebase"],
+      "notes": "Same incidents.json shape as Google Cloud."
+    },
+    {
+      "id": "fireworks",
+      "name": "Fireworks AI",
+      "category": "ai",
+      "statusPage": "https://status.fireworks.ai",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.fireworks.ai/api/v2/status.json",
+        "summary": "https://status.fireworks.ai/api/v2/summary.json",
+        "atom": "https://status.fireworks.ai/history.atom",
+        "rss": "https://status.fireworks.ai/history.rss",
+        "proxy": "https://status.fireworks.ai/proxy/status.fireworks.ai"
+      },
+      "hosts": ["api.fireworks.ai"]
+    },
+    {
+      "id": "flyio",
+      "name": "Fly.io",
+      "category": "hosting",
+      "statusPage": "https://status.flyio.net",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.flyio.net/api/v2/status.json",
+        "summary": "https://status.flyio.net/api/v2/summary.json",
+        "atom": "https://status.flyio.net/history.atom",
+        "rss": "https://status.flyio.net/history.rss",
+        "proxy": "https://status.flyio.net/proxy/status.flyio.net"
+      },
+      "hosts": ["fly.io", "api.fly.io", "*.fly.dev"],
+      "commands": ["flyctl", "fly"]
+    },
+    {
+      "id": "gcp",
+      "name": "Google Cloud",
+      "category": "cloud",
+      "statusPage": "https://status.cloud.google.com",
+      "adapter": "gcp",
+      "endpoints": {
+        "events": "https://status.cloud.google.com/incidents.json",
+        "atom": "https://status.cloud.google.com/feed.atom",
+        "components": "https://status.cloud.google.com/products.json"
+      },
+      "hosts": ["*.googleapis.com", "*.googleusercontent.com", "gcr.io", "*.pkg.dev"],
+      "commands": ["gcloud", "gsutil", "bq"],
+      "notes": "One entry for all Google Cloud (incl. Vertex AI and Gemini API incidents). Active incidents have end == null in incidents.json; filter by service_key / currently_affected_locations."
+    },
+    {
+      "id": "gitguardian",
+      "name": "GitGuardian",
+      "category": "observability",
+      "statusPage": "https://status.gitguardian.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.gitguardian.com/api/v2/status.json",
+        "summary": "https://status.gitguardian.com/api/v2/summary.json",
+        "atom": "https://status.gitguardian.com/history.atom",
+        "rss": "https://status.gitguardian.com/history.rss",
+        "proxy": "https://status.gitguardian.com/proxy/status.gitguardian.com"
+      },
+      "hosts": ["api.gitguardian.com"],
+      "commands": ["ggshield"]
+    },
+    {
+      "id": "github",
+      "name": "GitHub",
+      "category": "source-control",
+      "statusPage": "https://www.githubstatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.githubstatus.com/api/v2/status.json",
+        "summary": "https://www.githubstatus.com/api/v2/summary.json",
+        "unresolved": "https://www.githubstatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.githubstatus.com/history.atom",
+        "rss": "https://www.githubstatus.com/history.rss"
+      },
+      "hosts": [
+        "github.com",
+        "api.github.com",
+        "ghcr.io",
+        "codeload.github.com",
+        "*.githubusercontent.com",
+        "*.github.io"
+      ],
+      "commands": ["git", "gh"],
+      "components": [
+        "Git Operations",
+        "API Requests",
+        "Webhooks",
+        "Actions",
+        "Packages",
+        "Pull Requests",
+        "Issues",
+        "Pages",
+        "Copilot",
+        "Codespaces"
+      ],
+      "notes": "Single page for all of GitHub (Copilot, Pages, Packages/GHCR and Actions are components, not separate pages)."
+    },
+    {
+      "id": "gitlab",
+      "name": "GitLab",
+      "category": "source-control",
+      "statusPage": "https://status.gitlab.com",
+      "adapter": "statusio",
+      "endpoints": {
+        "status": "https://api.status.io/1.0/status/5b36dc6502d06804c08349f7",
+        "rss": "https://status.gitlab.com/pages/5b36dc6502d06804c08349f7/rss"
+      },
+      "hosts": ["gitlab.com", "registry.gitlab.com", "*.gitlab.io"],
+      "commands": ["glab"],
+      "components": [
+        "Git Operations",
+        "API",
+        "CI/CD",
+        "Package Registry",
+        "Container Registry",
+        "GitLab Pages",
+        "Website"
+      ]
+    },
+    {
+      "id": "grafana-cloud",
+      "name": "Grafana Cloud",
+      "category": "observability",
+      "statusPage": "https://status.grafana.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.grafana.com/api/v2/status.json",
+        "summary": "https://status.grafana.com/api/v2/summary.json",
+        "unresolved": "https://status.grafana.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.grafana.com/history.atom",
+        "rss": "https://status.grafana.com/history.rss"
+      },
+      "hosts": ["*.grafana.net", "grafana.com"]
+    },
+    {
+      "id": "groq",
+      "name": "Groq",
+      "category": "ai",
+      "statusPage": "https://groqstatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://groqstatus.com/api/v2/status.json",
+        "summary": "https://groqstatus.com/api/v2/summary.json",
+        "atom": "https://groqstatus.com/history.atom",
+        "rss": "https://groqstatus.com/history.rss",
+        "proxy": "https://groqstatus.com/proxy/groqstatus.com"
+      },
+      "hosts": ["api.groq.com", "console.groq.com"]
+    },
+    {
+      "id": "harness",
+      "name": "Harness",
+      "category": "ci",
+      "statusPage": "https://status.harness.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.harness.io/api/v2/status.json",
+        "summary": "https://status.harness.io/api/v2/summary.json",
+        "unresolved": "https://status.harness.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.harness.io/history.atom",
+        "rss": "https://status.harness.io/history.rss"
+      },
+      "hosts": ["app.harness.io"]
+    },
+    {
+      "id": "hashicorp",
+      "name": "HashiCorp",
+      "category": "other",
+      "statusPage": "https://status.hashicorp.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.hashicorp.com/api/v2/status.json",
+        "summary": "https://status.hashicorp.com/api/v2/summary.json",
+        "atom": "https://status.hashicorp.com/history.atom",
+        "rss": "https://status.hashicorp.com/history.rss",
+        "proxy": "https://status.hashicorp.com/proxy/status.hashicorp.com"
+      },
+      "hosts": ["releases.hashicorp.com", "registry.terraform.io", "app.terraform.io"],
+      "commands": ["terraform", "vault", "packer"]
+    },
+    {
+      "id": "heroku",
+      "name": "Heroku",
+      "category": "hosting",
+      "statusPage": "https://status.heroku.com",
+      "adapter": "heroku",
+      "endpoints": {
+        "status": "https://status.heroku.com/api/v4/current-status"
+      },
+      "hosts": ["heroku.com", "api.heroku.com", "git.heroku.com", "*.herokuapp.com"],
+      "commands": ["heroku"],
+      "notes": "Status is green/yellow/red per system (Apps, Data, Tools). Active incidents are in .incidents."
+    },
+    {
+      "id": "hetzner",
+      "name": "Hetzner",
+      "category": "cloud",
+      "statusPage": "https://status.hetzner.com",
+      "adapter": "feed-only",
+      "endpoints": {
+        "atom": "https://status.hetzner.com/en.atom"
+      },
+      "hosts": ["api.hetzner.cloud", "*.hetzner.cloud"],
+      "commands": ["hcloud"],
+      "notes": "Feed only (Atom, English)."
+    },
+    {
+      "id": "hex",
+      "name": "Hex",
+      "category": "registry",
+      "statusPage": "https://status.hex.pm",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.hex.pm/api/v2/status.json",
+        "summary": "https://status.hex.pm/api/v2/summary.json",
+        "unresolved": "https://status.hex.pm/api/v2/incidents/unresolved.json",
+        "atom": "https://status.hex.pm/history.atom",
+        "rss": "https://status.hex.pm/history.rss"
+      },
+      "hosts": ["hex.pm", "repo.hex.pm"],
+      "commands": ["mix", "hex"],
+      "components": ["Repository", "Hex.pm Website & API"]
+    },
+    {
+      "id": "honeycomb",
+      "name": "Honeycomb",
+      "category": "observability",
+      "statusPage": "https://status.honeycomb.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.honeycomb.io/api/v2/status.json",
+        "summary": "https://status.honeycomb.io/api/v2/summary.json",
+        "unresolved": "https://status.honeycomb.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.honeycomb.io/history.atom",
+        "rss": "https://status.honeycomb.io/history.rss"
+      },
+      "hosts": ["api.honeycomb.io", "*.honeycomb.io"]
+    },
+    {
+      "id": "huggingface",
+      "name": "Hugging Face",
+      "category": "ai",
+      "statusPage": "https://status.huggingface.co",
+      "adapter": "betterstack",
+      "endpoints": {
+        "status": "https://status.huggingface.co/index.json",
+        "rss": "https://status.huggingface.co/feed.atom"
+      },
+      "hosts": ["huggingface.co", "hf.co", "*.hf.co", "cdn-lfs.huggingface.co"],
+      "commands": ["hf", "huggingface-cli"],
+      "notes": "Better Stack page. Read aggregate_state from the first 1KB of index.json."
+    },
+    {
+      "id": "jfrog",
+      "name": "JFrog",
+      "category": "registry",
+      "statusPage": "https://status.jfrog.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.jfrog.io/api/v2/status.json",
+        "summary": "https://status.jfrog.io/api/v2/summary.json",
+        "unresolved": "https://status.jfrog.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.jfrog.io/history.atom",
+        "rss": "https://status.jfrog.io/history.rss"
+      },
+      "hosts": ["*.jfrog.io"],
+      "commands": ["jf"]
+    },
+    {
+      "id": "jira",
+      "name": "Jira",
+      "category": "productivity",
+      "statusPage": "https://jira-software.status.atlassian.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://jira-software.status.atlassian.com/api/v2/status.json",
+        "summary": "https://jira-software.status.atlassian.com/api/v2/summary.json",
+        "unresolved": "https://jira-software.status.atlassian.com/api/v2/incidents/unresolved.json",
+        "atom": "https://jira-software.status.atlassian.com/history.atom",
+        "rss": "https://jira-software.status.atlassian.com/history.rss"
+      },
+      "hosts": ["*.atlassian.net"],
+      "notes": "Product page for Jira Software; the umbrella page can miss product incidents."
+    },
+    {
+      "id": "koyeb",
+      "name": "Koyeb",
+      "category": "hosting",
+      "statusPage": "https://status.koyeb.com",
+      "adapter": "instatus",
+      "endpoints": {
+        "status": "https://status.koyeb.com/summary.json",
+        "components": "https://status.koyeb.com/v2/components.json"
+      },
+      "hosts": ["app.koyeb.com"],
+      "commands": ["koyeb"]
+    },
+    {
+      "id": "langfuse",
+      "name": "Langfuse",
+      "category": "ai",
+      "statusPage": "https://status.langfuse.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.langfuse.com/api/v2/status.json",
+        "summary": "https://status.langfuse.com/api/v2/summary.json",
+        "atom": "https://status.langfuse.com/history.atom",
+        "rss": "https://status.langfuse.com/history.rss",
+        "proxy": "https://status.langfuse.com/proxy/status.langfuse.com"
+      },
+      "hosts": ["cloud.langfuse.com", "us.cloud.langfuse.com"]
+    },
+    {
+      "id": "launchdarkly",
+      "name": "LaunchDarkly",
+      "category": "observability",
+      "statusPage": "https://status.launchdarkly.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.launchdarkly.com/api/v2/status.json",
+        "summary": "https://status.launchdarkly.com/api/v2/summary.json",
+        "unresolved": "https://status.launchdarkly.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.launchdarkly.com/history.atom",
+        "rss": "https://status.launchdarkly.com/history.rss"
+      },
+      "hosts": ["*.launchdarkly.com"]
+    },
+    {
+      "id": "linear",
+      "name": "Linear",
+      "category": "productivity",
+      "statusPage": "https://linearstatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://linearstatus.com/api/v2/status.json",
+        "summary": "https://linearstatus.com/api/v2/summary.json",
+        "atom": "https://linearstatus.com/history.atom",
+        "rss": "https://linearstatus.com/history.rss",
+        "proxy": "https://linearstatus.com/proxy/linearstatus.com"
+      },
+      "hosts": ["linear.app", "api.linear.app"]
+    },
+    {
+      "id": "linode",
+      "name": "Akamai Cloud (Linode)",
+      "category": "cloud",
+      "statusPage": "https://status.linode.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.linode.com/api/v2/status.json",
+        "summary": "https://status.linode.com/api/v2/summary.json",
+        "unresolved": "https://status.linode.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.linode.com/history.atom",
+        "rss": "https://status.linode.com/history.rss"
+      },
+      "hosts": ["api.linode.com"],
+      "commands": ["linode-cli"]
+    },
+    {
+      "id": "mailgun",
+      "name": "Mailgun",
+      "category": "communication",
+      "statusPage": "https://status.mailgun.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.mailgun.com/api/v2/status.json",
+        "summary": "https://status.mailgun.com/api/v2/summary.json",
+        "unresolved": "https://status.mailgun.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.mailgun.com/history.atom",
+        "rss": "https://status.mailgun.com/history.rss"
+      },
+      "hosts": ["api.mailgun.net", "api.eu.mailgun.net"]
+    },
+    {
+      "id": "maven-central",
+      "name": "Maven Central",
+      "category": "registry",
+      "statusPage": "https://status.maven.org",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.maven.org/api/v2/status.json",
+        "summary": "https://status.maven.org/api/v2/summary.json",
+        "unresolved": "https://status.maven.org/api/v2/incidents/unresolved.json",
+        "atom": "https://status.maven.org/history.atom",
+        "rss": "https://status.maven.org/history.rss"
+      },
+      "hosts": [
+        "repo1.maven.org",
+        "repo.maven.apache.org",
+        "central.sonatype.com",
+        "search.maven.org"
+      ],
+      "commands": ["mvn", "gradle"],
+      "components": ["CDN - repo1.maven.org", "Portal - central.sonatype.com"]
+    },
+    {
+      "id": "miro",
+      "name": "Miro",
+      "category": "productivity",
+      "statusPage": "https://status.miro.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.miro.com/api/v2/status.json",
+        "summary": "https://status.miro.com/api/v2/summary.json",
+        "proxy": "https://status.miro.com/proxy/status.miro.com"
+      },
+      "hosts": ["miro.com", "api.miro.com"],
+      "notes": "No history feed; status.json and summary.json only."
+    },
+    {
+      "id": "mistral",
+      "name": "Mistral AI",
+      "category": "ai",
+      "statusPage": "https://status.mistral.ai",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.mistral.ai/api/v2/status.json",
+        "summary": "https://status.mistral.ai/api/v2/summary.json",
+        "unresolved": "https://status.mistral.ai/api/v2/incidents/unresolved.json"
+      },
+      "hosts": ["api.mistral.ai", "console.mistral.ai"],
+      "components": ["Completion API", "Embedding API", "Agents API", "Console"],
+      "notes": "No history feed; status.json and summary.json only. The human page returns 403 to non-browser clients; the JSON API does not."
+    },
+    {
+      "id": "modal",
+      "name": "Modal",
+      "category": "ai",
+      "statusPage": "https://status.modal.com",
+      "adapter": "betterstack",
+      "endpoints": {
+        "status": "https://status.modal.com/index.json",
+        "rss": "https://status.modal.com/feed.atom"
+      },
+      "hosts": ["modal.com", "api.modal.com"],
+      "commands": ["modal"],
+      "notes": "Better Stack page; index.json is ~124KB, read only the first 1KB for aggregate_state."
+    },
+    {
+      "id": "mongodb-atlas",
+      "name": "MongoDB Atlas",
+      "category": "database",
+      "statusPage": "https://status.mongodb.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.mongodb.com/api/v2/status.json",
+        "summary": "https://status.mongodb.com/api/v2/summary.json",
+        "unresolved": "https://status.mongodb.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.mongodb.com/history.atom",
+        "rss": "https://status.mongodb.com/history.rss"
+      },
+      "hosts": ["*.mongodb.net", "cloud.mongodb.com"],
+      "commands": ["mongosh", "atlas"]
+    },
+    {
+      "id": "neon",
+      "name": "Neon",
+      "category": "database",
+      "statusPage": "https://neonstatus.com",
+      "adapter": "statusio",
+      "endpoints": {
+        "status": "https://api.status.io/1.0/status/6878fc85709daa75be6c7e3c",
+        "rss": "https://neonstatus.com/pages/6878fc85709daa75be6c7e3c/rss"
+      },
+      "hosts": ["neon.tech", "*.neon.tech", "console.neon.tech"],
+      "commands": ["neonctl"],
+      "notes": "Status.io page."
+    },
+    {
+      "id": "netlify",
+      "name": "Netlify",
+      "category": "hosting",
+      "statusPage": "https://www.netlifystatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.netlifystatus.com/api/v2/status.json",
+        "summary": "https://www.netlifystatus.com/api/v2/summary.json",
+        "unresolved": "https://www.netlifystatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.netlifystatus.com/history.atom",
+        "rss": "https://www.netlifystatus.com/history.rss"
+      },
+      "hosts": ["netlify.com", "api.netlify.com", "*.netlify.app"],
+      "commands": ["netlify"],
+      "components": ["Build Pipeline", "API", "Netlify Functions", "Hosted DNS"]
+    },
+    {
+      "id": "new-relic",
+      "name": "New Relic",
+      "category": "observability",
+      "statusPage": "https://newrelic.statuspage.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://newrelic.statuspage.io/api/v2/status.json",
+        "summary": "https://newrelic.statuspage.io/api/v2/summary.json",
+        "unresolved": "https://newrelic.statuspage.io/api/v2/incidents/unresolved.json",
+        "atom": "https://newrelic.statuspage.io/history.atom",
+        "rss": "https://newrelic.statuspage.io/history.rss"
+      },
+      "hosts": ["*.newrelic.com", "*.nr-data.net"],
+      "notes": "Endpoints use newrelic.statuspage.io (page.url reports status.newrelic.com); the vanity domain did not resolve from the verifying machine."
+    },
+    {
+      "id": "ngrok",
+      "name": "ngrok",
+      "category": "hosting",
+      "statusPage": "https://status.ngrok.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.ngrok.com/api/v2/status.json",
+        "summary": "https://status.ngrok.com/api/v2/summary.json",
+        "unresolved": "https://status.ngrok.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.ngrok.com/history.atom",
+        "rss": "https://status.ngrok.com/history.rss"
+      },
+      "hosts": ["ngrok.com", "*.ngrok.io", "*.ngrok-free.app"],
+      "commands": ["ngrok"]
+    },
+    {
+      "id": "northflank",
+      "name": "Northflank",
+      "category": "hosting",
+      "statusPage": "https://status.northflank.com",
+      "adapter": "instatus",
+      "endpoints": {
+        "status": "https://status.northflank.com/summary.json",
+        "rss": "https://status.northflank.com/history.rss"
+      },
+      "hosts": ["northflank.com", "api.northflank.com"]
+    },
+    {
+      "id": "notion",
+      "name": "Notion",
+      "category": "productivity",
+      "statusPage": "https://www.notion-status.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://www.notion-status.com/api/v2/status.json",
+        "summary": "https://www.notion-status.com/api/v2/summary.json",
+        "atom": "https://www.notion-status.com/history.atom",
+        "rss": "https://www.notion-status.com/history.rss",
+        "proxy": "https://www.notion-status.com/proxy/www.notion-status.com"
+      },
+      "hosts": ["notion.so", "www.notion.so", "api.notion.com"]
+    },
+    {
+      "id": "npm",
+      "name": "npm",
+      "category": "registry",
+      "statusPage": "https://status.npmjs.org",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.npmjs.org/api/v2/status.json",
+        "summary": "https://status.npmjs.org/api/v2/summary.json",
+        "unresolved": "https://status.npmjs.org/api/v2/incidents/unresolved.json",
+        "atom": "https://status.npmjs.org/history.atom",
+        "rss": "https://status.npmjs.org/history.rss"
+      },
+      "hosts": ["npmjs.org", "registry.npmjs.org", "registry.yarnpkg.com", "www.npmjs.com"],
+      "commands": ["npm", "pnpm", "yarn", "npx", "bun"],
+      "components": ["Package installation", "Package publishing", "www.npmjs.com website"]
+    },
+    {
+      "id": "openai",
+      "name": "OpenAI",
+      "category": "ai",
+      "statusPage": "https://status.openai.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.openai.com/api/v2/status.json",
+        "summary": "https://status.openai.com/api/v2/summary.json",
+        "atom": "https://status.openai.com/history.atom",
+        "rss": "https://status.openai.com/history.rss",
+        "proxy": "https://status.openai.com/proxy/status.openai.com"
+      },
+      "hosts": ["api.openai.com", "chatgpt.com", "platform.openai.com", "auth.openai.com"],
+      "commands": ["codex"],
+      "components": ["Chat Completions", "Responses", "Embeddings", "Realtime"],
+      "notes": "incident.io-hosted page; summary.json has components but no incidents array. Use status.json, then proxy for the ongoing incident names."
+    },
+    {
+      "id": "openrouter",
+      "name": "OpenRouter",
+      "category": "ai",
+      "statusPage": "https://status.openrouter.ai",
+      "adapter": "feed-only",
+      "endpoints": {
+        "atom": "https://status.openrouter.ai/history.atom",
+        "rss": "https://status.openrouter.ai/history.rss"
+      },
+      "hosts": ["openrouter.ai"],
+      "notes": "Feed only (no JSON API found). An empty or old feed head means no recent incidents."
+    },
+    {
+      "id": "oracle-cloud",
+      "name": "Oracle Cloud",
+      "category": "cloud",
+      "statusPage": "https://ocistatus.oraclecloud.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://ocistatus.oraclecloud.com/api/v2/status.json",
+        "rss": "https://ocistatus.oraclecloud.com/history.rss"
+      },
+      "hosts": ["*.oraclecloud.com"],
+      "commands": ["oci"],
+      "notes": "Only status.json is available; no summary or feed verified."
+    },
+    {
+      "id": "paddle",
+      "name": "Paddle",
+      "category": "payments",
+      "statusPage": "https://paddlestatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://paddlestatus.com/api/v2/status.json",
+        "summary": "https://paddlestatus.com/api/v2/summary.json",
+        "atom": "https://paddlestatus.com/history.atom",
+        "rss": "https://paddlestatus.com/history.rss",
+        "proxy": "https://paddlestatus.com/proxy/paddlestatus.com"
+      },
+      "hosts": ["api.paddle.com"]
+    },
+    {
+      "id": "perplexity",
+      "name": "Perplexity",
+      "category": "ai",
+      "statusPage": "https://status.perplexity.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.perplexity.com/api/v2/status.json",
+        "summary": "https://status.perplexity.com/api/v2/summary.json",
+        "atom": "https://status.perplexity.com/history.atom",
+        "rss": "https://status.perplexity.com/history.rss",
+        "proxy": "https://status.perplexity.com/proxy/status.perplexity.com"
+      },
+      "hosts": ["api.perplexity.ai"]
+    },
+    {
+      "id": "pinecone",
+      "name": "Pinecone",
+      "category": "ai",
+      "statusPage": "https://status.pinecone.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.pinecone.io/api/v2/status.json",
+        "summary": "https://status.pinecone.io/api/v2/summary.json",
+        "unresolved": "https://status.pinecone.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.pinecone.io/history.atom",
+        "rss": "https://status.pinecone.io/history.rss"
+      },
+      "hosts": ["api.pinecone.io", "*.pinecone.io"]
+    },
+    {
+      "id": "planetscale",
+      "name": "PlanetScale",
+      "category": "database",
+      "statusPage": "https://www.planetscalestatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://www.planetscalestatus.com/api/v2/status.json",
+        "summary": "https://www.planetscalestatus.com/api/v2/summary.json",
+        "atom": "https://www.planetscalestatus.com/history.atom",
+        "rss": "https://www.planetscalestatus.com/history.rss",
+        "proxy": "https://www.planetscalestatus.com/proxy/www.planetscalestatus.com"
+      },
+      "hosts": ["planetscale.com", "*.psdb.cloud"],
+      "commands": ["pscale"]
+    },
+    {
+      "id": "posthog",
+      "name": "PostHog",
+      "category": "observability",
+      "statusPage": "https://www.posthogstatus.com",
+      "adapter": "feed-only",
+      "endpoints": {
+        "atom": "https://www.posthogstatus.com/feed.atom"
+      },
+      "hosts": ["us.i.posthog.com", "eu.i.posthog.com", "app.posthog.com"],
+      "notes": "incident.io page without the compat JSON API; feed only."
+    },
+    {
+      "id": "postman",
+      "name": "Postman",
+      "category": "productivity",
+      "statusPage": "https://status.postman.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.postman.com/api/v2/status.json",
+        "summary": "https://status.postman.com/api/v2/summary.json",
+        "unresolved": "https://status.postman.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.postman.com/history.atom",
+        "rss": "https://status.postman.com/history.rss"
+      },
+      "hosts": ["postman.com", "api.getpostman.com", "api.postman.com"],
+      "commands": ["newman", "postman"]
+    },
+    {
+      "id": "prisma",
+      "name": "Prisma",
+      "category": "database",
+      "statusPage": "https://www.prisma-status.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.prisma-status.com/api/v2/status.json",
+        "summary": "https://www.prisma-status.com/api/v2/summary.json",
+        "unresolved": "https://www.prisma-status.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.prisma-status.com/history.atom",
+        "rss": "https://www.prisma-status.com/history.rss"
+      },
+      "hosts": ["prisma.io", "*.prisma-data.net"],
+      "commands": ["prisma"]
+    },
+    {
+      "id": "pulumi",
+      "name": "Pulumi",
+      "category": "other",
+      "statusPage": "https://status.pulumi.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.pulumi.com/api/v2/status.json",
+        "summary": "https://status.pulumi.com/api/v2/summary.json",
+        "unresolved": "https://status.pulumi.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.pulumi.com/history.atom",
+        "rss": "https://status.pulumi.com/history.rss"
+      },
+      "hosts": ["api.pulumi.com", "app.pulumi.com"],
+      "commands": ["pulumi"]
+    },
+    {
+      "id": "pypi",
+      "name": "PyPI",
+      "category": "registry",
+      "statusPage": "https://status.python.org",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.python.org/api/v2/status.json",
+        "summary": "https://status.python.org/api/v2/summary.json",
+        "unresolved": "https://status.python.org/api/v2/incidents/unresolved.json",
+        "atom": "https://status.python.org/history.atom",
+        "rss": "https://status.python.org/history.rss"
+      },
+      "hosts": ["pypi.org", "files.pythonhosted.org", "upload.pypi.org"],
+      "commands": ["pip", "uv", "poetry", "twine", "pipx"],
+      "components": ["pypi.org - General", "pypi.org - CDN", "pypi.org - Backends"],
+      "notes": "Page is shared with python.org, docs.python.org and mailing lists; only the pypi.org components matter for pip/uv."
+    },
+    {
+      "id": "quay",
+      "name": "Quay.io",
+      "category": "registry",
+      "statusPage": "https://status.redhat.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.redhat.com/api/v2/status.json",
+        "summary": "https://status.redhat.com/api/v2/summary.json",
+        "unresolved": "https://status.redhat.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.redhat.com/history.atom",
+        "rss": "https://status.redhat.com/history.rss"
+      },
+      "hosts": ["quay.io"],
+      "commands": ["podman", "skopeo"],
+      "notes": "status.quay.io redirects to the shared Red Hat status page; look for the Quay.io component in summary.json."
+    },
+    {
+      "id": "render",
+      "name": "Render",
+      "category": "hosting",
+      "statusPage": "https://status.render.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.render.com/api/v2/status.json",
+        "summary": "https://status.render.com/api/v2/summary.json",
+        "unresolved": "https://status.render.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.render.com/history.atom",
+        "rss": "https://status.render.com/history.rss"
+      },
+      "hosts": ["render.com", "api.render.com", "*.onrender.com"],
+      "commands": ["render"]
+    },
+    {
+      "id": "replicate",
+      "name": "Replicate",
+      "category": "ai",
+      "statusPage": "https://www.cloudflarestatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "summary": "https://www.cloudflarestatus.com/api/v2/summary.json"
+      },
+      "hosts": ["api.replicate.com", "replicate.com", "replicate.delivery"],
+      "components": ["Replicate"],
+      "notes": "Replicate is now on the Cloudflare status page (replicatestatus.com redirects there). Filter summary.json components for \"Replicate\"; the page is large."
+    },
+    {
+      "id": "resend",
+      "name": "Resend",
+      "category": "communication",
+      "statusPage": "https://resend-status.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://resend-status.com/api/v2/status.json",
+        "summary": "https://resend-status.com/api/v2/summary.json",
+        "atom": "https://resend-status.com/history.atom",
+        "rss": "https://resend-status.com/history.rss",
+        "proxy": "https://resend-status.com/proxy/resend-status.com"
+      },
+      "hosts": ["api.resend.com"]
+    },
+    {
+      "id": "rollbar",
+      "name": "Rollbar",
+      "category": "observability",
+      "statusPage": "https://status.rollbar.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.rollbar.com/api/v2/status.json",
+        "summary": "https://status.rollbar.com/api/v2/summary.json",
+        "atom": "https://status.rollbar.com/history.atom",
+        "rss": "https://status.rollbar.com/history.rss",
+        "proxy": "https://status.rollbar.com/proxy/status.rollbar.com"
+      },
+      "hosts": ["api.rollbar.com"]
+    },
+    {
+      "id": "rubygems",
+      "name": "RubyGems",
+      "category": "registry",
+      "statusPage": "https://status.rubygems.org",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.rubygems.org/api/v2/status.json",
+        "summary": "https://status.rubygems.org/api/v2/summary.json",
+        "unresolved": "https://status.rubygems.org/api/v2/incidents/unresolved.json",
+        "atom": "https://status.rubygems.org/history.atom",
+        "rss": "https://status.rubygems.org/history.rss"
+      },
+      "hosts": ["rubygems.org", "index.rubygems.org", "api.rubygems.org"],
+      "commands": ["gem", "bundle"],
+      "components": ["Gem Downloads", "Gem Index API", "Dependency API", "Application"]
+    },
+    {
+      "id": "sanity",
+      "name": "Sanity",
+      "category": "other",
+      "statusPage": "https://www.sanity-status.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.sanity-status.com/api/v2/status.json",
+        "summary": "https://www.sanity-status.com/api/v2/summary.json",
+        "unresolved": "https://www.sanity-status.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.sanity-status.com/history.atom",
+        "rss": "https://www.sanity-status.com/history.rss"
+      },
+      "hosts": ["api.sanity.io", "*.apicdn.sanity.io"]
+    },
+    {
+      "id": "saucelabs",
+      "name": "Sauce Labs",
+      "category": "ci",
+      "statusPage": "https://status.saucelabs.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.saucelabs.com/api/v2/status.json",
+        "summary": "https://status.saucelabs.com/api/v2/summary.json",
+        "unresolved": "https://status.saucelabs.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.saucelabs.com/history.atom",
+        "rss": "https://status.saucelabs.com/history.rss"
+      },
+      "hosts": ["saucelabs.com", "*.saucelabs.com"]
+    },
+    {
+      "id": "scaleway",
+      "name": "Scaleway",
+      "category": "cloud",
+      "statusPage": "https://status.scaleway.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.scaleway.com/api/v2/status.json",
+        "summary": "https://status.scaleway.com/api/v2/summary.json",
+        "unresolved": "https://status.scaleway.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.scaleway.com/history.atom",
+        "rss": "https://status.scaleway.com/history.rss"
+      },
+      "hosts": ["api.scaleway.com"],
+      "commands": ["scw"]
+    },
+    {
+      "id": "semaphore",
+      "name": "Semaphore CI",
+      "category": "ci",
+      "statusPage": "https://status.semaphore.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.semaphore.io/api/v2/status.json",
+        "summary": "https://status.semaphore.io/api/v2/summary.json",
+        "unresolved": "https://status.semaphore.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.semaphore.io/history.atom",
+        "rss": "https://status.semaphore.io/history.rss"
+      },
+      "hosts": ["semaphoreci.com", "*.semaphoreci.com"]
+    },
+    {
+      "id": "sentry",
+      "name": "Sentry",
+      "category": "observability",
+      "statusPage": "https://status.sentry.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.sentry.io/api/v2/status.json",
+        "summary": "https://status.sentry.io/api/v2/summary.json",
+        "unresolved": "https://status.sentry.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.sentry.io/history.atom",
+        "rss": "https://status.sentry.io/history.rss"
+      },
+      "hosts": [
+        "sentry.io",
+        "*.ingest.sentry.io",
+        "*.ingest.us.sentry.io",
+        "*.ingest.de.sentry.io"
+      ],
+      "commands": ["sentry-cli"],
+      "components": [
+        "API",
+        "Dashboard",
+        "US Error Ingestion",
+        "EU Error Ingestion",
+        "US Transaction Ingestion",
+        "EU Transaction Ingestion"
+      ]
+    },
+    {
+      "id": "shortcut",
+      "name": "Shortcut",
+      "category": "productivity",
+      "statusPage": "https://status.shortcut.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.shortcut.com/api/v2/status.json",
+        "summary": "https://status.shortcut.com/api/v2/summary.json",
+        "unresolved": "https://status.shortcut.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.shortcut.com/history.atom",
+        "rss": "https://status.shortcut.com/history.rss"
+      },
+      "hosts": ["api.app.shortcut.com"]
+    },
+    {
+      "id": "slack",
+      "name": "Slack",
+      "category": "communication",
+      "statusPage": "https://slack-status.com",
+      "adapter": "slack",
+      "endpoints": {
+        "status": "https://slack-status.com/api/v2.0.0/current",
+        "events": "https://slack-status.com/api/v2.0.0/history"
+      },
+      "hosts": ["slack.com", "*.slack.com", "slack-edge.com"],
+      "commands": ["slack"],
+      "notes": "status endpoint returns active_incidents only; empty array means healthy."
+    },
+    {
+      "id": "snowflake",
+      "name": "Snowflake",
+      "category": "database",
+      "statusPage": "https://status.snowflake.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.snowflake.com/api/v2/status.json",
+        "summary": "https://status.snowflake.com/api/v2/summary.json",
+        "unresolved": "https://status.snowflake.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.snowflake.com/history.atom",
+        "rss": "https://status.snowflake.com/history.rss"
+      },
+      "hosts": ["*.snowflakecomputing.com"],
+      "commands": ["snowsql", "snow"]
+    },
+    {
+      "id": "snyk",
+      "name": "Snyk",
+      "category": "observability",
+      "statusPage": "https://status.snyk.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.snyk.io/api/v2/status.json",
+        "summary": "https://status.snyk.io/api/v2/summary.json",
+        "unresolved": "https://status.snyk.io/api/v2/incidents/unresolved.json",
+        "atom": "https://status.snyk.io/history.atom",
+        "rss": "https://status.snyk.io/history.rss"
+      },
+      "hosts": ["snyk.io", "api.snyk.io", "*.snyk.io"],
+      "commands": ["snyk"]
+    },
+    {
+      "id": "socket-dev",
+      "name": "Socket",
+      "category": "observability",
+      "statusPage": "https://status.socket.dev",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.socket.dev/api/v2/status.json",
+        "summary": "https://status.socket.dev/api/v2/summary.json",
+        "unresolved": "https://status.socket.dev/api/v2/incidents/unresolved.json",
+        "atom": "https://status.socket.dev/history.atom",
+        "rss": "https://status.socket.dev/history.rss"
+      },
+      "hosts": ["socket.dev", "api.socket.dev"]
+    },
+    {
+      "id": "sonarqube-cloud",
+      "name": "SonarQube Cloud",
+      "category": "observability",
+      "statusPage": "https://status.sonarqube.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.sonarqube.com/api/v2/status.json",
+        "summary": "https://status.sonarqube.com/api/v2/summary.json",
+        "unresolved": "https://status.sonarqube.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.sonarqube.com/history.atom",
+        "rss": "https://status.sonarqube.com/history.rss"
+      },
+      "hosts": ["sonarcloud.io", "sonarqube.com"],
+      "commands": ["sonar-scanner"],
+      "notes": "status.sonarcloud.io returned 401; this is the SonarQube page that sonarcloud links to."
+    },
+    {
+      "id": "sourcegraph",
+      "name": "Sourcegraph",
+      "category": "source-control",
+      "statusPage": "https://sourcegraphstatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://sourcegraphstatus.com/api/v2/status.json",
+        "summary": "https://sourcegraphstatus.com/api/v2/summary.json",
+        "atom": "https://sourcegraphstatus.com/history.atom",
+        "rss": "https://sourcegraphstatus.com/history.rss",
+        "proxy": "https://sourcegraphstatus.com/proxy/sourcegraphstatus.com"
+      },
+      "hosts": ["sourcegraph.com"]
+    },
+    {
+      "id": "square",
+      "name": "Square",
+      "category": "payments",
+      "statusPage": "https://www.issquareup.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://www.issquareup.com/api/v2/status.json",
+        "summary": "https://www.issquareup.com/api/v2/summary.json",
+        "proxy": "https://www.issquareup.com/proxy/www.issquareup.com"
+      },
+      "hosts": ["connect.squareup.com"],
+      "notes": "No history feed; status.json and summary.json only."
+    },
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "category": "payments",
+      "statusPage": "https://www.stripestatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.stripestatus.com/api/v2/status.json",
+        "summary": "https://www.stripestatus.com/api/v2/summary.json",
+        "unresolved": "https://www.stripestatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.stripestatus.com/history.atom",
+        "rss": "https://www.stripestatus.com/history.rss"
+      },
+      "hosts": ["api.stripe.com", "js.stripe.com", "files.stripe.com"],
+      "commands": ["stripe"],
+      "components": ["Stripe API", "Global payments"]
+    },
+    {
+      "id": "supabase",
+      "name": "Supabase",
+      "category": "database",
+      "statusPage": "https://status.supabase.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.supabase.com/api/v2/status.json",
+        "summary": "https://status.supabase.com/api/v2/summary.json",
+        "atom": "https://status.supabase.com/history.atom",
+        "rss": "https://status.supabase.com/history.rss",
+        "proxy": "https://status.supabase.com/proxy/status.supabase.com"
+      },
+      "hosts": ["supabase.com", "*.supabase.co", "*.supabase.com"],
+      "commands": ["supabase"]
+    },
+    {
+      "id": "tailscale",
+      "name": "Tailscale",
+      "category": "other",
+      "statusPage": "https://status.tailscale.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.tailscale.com/api/v2/status.json",
+        "summary": "https://status.tailscale.com/api/v2/summary.json",
+        "atom": "https://status.tailscale.com/history.atom",
+        "rss": "https://status.tailscale.com/history.rss",
+        "proxy": "https://status.tailscale.com/proxy/status.tailscale.com"
+      },
+      "hosts": ["login.tailscale.com", "controlplane.tailscale.com"],
+      "commands": ["tailscale"]
+    },
+    {
+      "id": "tavily",
+      "name": "Tavily",
+      "category": "ai",
+      "statusPage": "https://status.tavily.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://status.tavily.com/api/v2/status.json",
+        "summary": "https://status.tavily.com/api/v2/summary.json",
+        "atom": "https://status.tavily.com/history.atom",
+        "rss": "https://status.tavily.com/history.rss",
+        "proxy": "https://status.tavily.com/proxy/status.tavily.com"
+      },
+      "hosts": ["api.tavily.com"]
+    },
+    {
+      "id": "together-ai",
+      "name": "Together AI",
+      "category": "ai",
+      "statusPage": "https://status.togetherplatform.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.togetherplatform.com/api/v2/status.json",
+        "summary": "https://status.togetherplatform.com/api/v2/summary.json",
+        "unresolved": "https://status.togetherplatform.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.togetherplatform.com/history.atom",
+        "rss": "https://status.togetherplatform.com/history.rss"
+      },
+      "hosts": ["api.together.xyz", "api.together.ai"]
+    },
+    {
+      "id": "travis-ci",
+      "name": "Travis CI",
+      "category": "ci",
+      "statusPage": "https://www.traviscistatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.traviscistatus.com/api/v2/status.json",
+        "summary": "https://www.traviscistatus.com/api/v2/summary.json",
+        "unresolved": "https://www.traviscistatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.traviscistatus.com/history.atom",
+        "rss": "https://www.traviscistatus.com/history.rss"
+      },
+      "hosts": ["travis-ci.com", "api.travis-ci.com"]
+    },
+    {
+      "id": "trello",
+      "name": "Trello",
+      "category": "productivity",
+      "statusPage": "https://trello.status.atlassian.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://trello.status.atlassian.com/api/v2/status.json",
+        "summary": "https://trello.status.atlassian.com/api/v2/summary.json",
+        "unresolved": "https://trello.status.atlassian.com/api/v2/incidents/unresolved.json",
+        "atom": "https://trello.status.atlassian.com/history.atom",
+        "rss": "https://trello.status.atlassian.com/history.rss"
+      },
+      "hosts": ["trello.com", "api.trello.com"],
+      "components": ["Trello.com", "API"]
+    },
+    {
+      "id": "turso",
+      "name": "Turso",
+      "category": "database",
+      "statusPage": "https://status.turso.tech",
+      "adapter": "betterstack",
+      "endpoints": {
+        "status": "https://status.turso.tech/index.json",
+        "rss": "https://status.turso.tech/feed.atom"
+      },
+      "hosts": ["turso.tech", "*.turso.io"],
+      "commands": ["turso"],
+      "notes": "Better Stack page; index.json is ~270KB, read only the first 1KB."
+    },
+    {
+      "id": "twilio",
+      "name": "Twilio and SendGrid",
+      "category": "communication",
+      "statusPage": "https://status.twilio.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.twilio.com/api/v2/status.json",
+        "summary": "https://status.twilio.com/api/v2/summary.json",
+        "unresolved": "https://status.twilio.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.twilio.com/history.atom",
+        "rss": "https://status.twilio.com/history.rss"
+      },
+      "hosts": ["api.twilio.com", "twilio.com", "*.twilio.com", "api.sendgrid.com", "sendgrid.com"],
+      "commands": ["twilio"],
+      "notes": "SendGrid shares the Twilio page (status.sendgrid.com and status.twilio.com return identical data). summary.json is ~200KB; prefer status.json."
+    },
+    {
+      "id": "upstash",
+      "name": "Upstash",
+      "category": "database",
+      "statusPage": "https://status.upstash.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.upstash.com/api/v2/status.json",
+        "summary": "https://status.upstash.com/api/v2/summary.json",
+        "unresolved": "https://status.upstash.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.upstash.com/history.atom",
+        "rss": "https://status.upstash.com/history.rss"
+      },
+      "hosts": ["*.upstash.io"]
+    },
+    {
+      "id": "vercel",
+      "name": "Vercel",
+      "category": "hosting",
+      "statusPage": "https://www.vercel-status.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.vercel-status.com/api/v2/status.json",
+        "summary": "https://www.vercel-status.com/api/v2/summary.json",
+        "unresolved": "https://www.vercel-status.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.vercel-status.com/history.atom",
+        "rss": "https://www.vercel-status.com/history.rss"
+      },
+      "hosts": ["vercel.com", "api.vercel.com", "*.vercel.app"],
+      "commands": ["vercel"],
+      "components": [
+        "Dashboard",
+        "Builds",
+        "API",
+        "Deploy Hooks",
+        "Git Integrations",
+        "AI Gateway",
+        "npm Registry"
+      ],
+      "notes": "Components list includes dozens of per-region rows."
+    },
+    {
+      "id": "voyage-ai",
+      "name": "Voyage AI",
+      "category": "ai",
+      "statusPage": "https://voyageai-status.statuspage.io",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://voyageai-status.statuspage.io/api/v2/status.json",
+        "summary": "https://voyageai-status.statuspage.io/api/v2/summary.json",
+        "unresolved": "https://voyageai-status.statuspage.io/api/v2/incidents/unresolved.json",
+        "atom": "https://voyageai-status.statuspage.io/history.atom",
+        "rss": "https://voyageai-status.statuspage.io/history.rss"
+      },
+      "hosts": ["api.voyageai.com"],
+      "notes": "Endpoints are on the *.statuspage.io host; the vanity status domain is not used here."
+    },
+    {
+      "id": "webflow",
+      "name": "Webflow",
+      "category": "hosting",
+      "statusPage": "https://status.webflow.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.webflow.com/api/v2/status.json",
+        "summary": "https://status.webflow.com/api/v2/summary.json",
+        "unresolved": "https://status.webflow.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.webflow.com/history.atom",
+        "rss": "https://status.webflow.com/history.rss"
+      },
+      "hosts": ["webflow.com", "api.webflow.com"]
+    },
+    {
+      "id": "windsurf",
+      "name": "Windsurf",
+      "category": "ai",
+      "statusPage": "https://status.windsurf.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.windsurf.com/api/v2/status.json",
+        "summary": "https://status.windsurf.com/api/v2/summary.json",
+        "unresolved": "https://status.windsurf.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.windsurf.com/history.atom",
+        "rss": "https://status.windsurf.com/history.rss"
+      },
+      "hosts": ["windsurf.com", "codeium.com"]
+    },
+    {
+      "id": "workos",
+      "name": "WorkOS",
+      "category": "other",
+      "statusPage": "https://status.workos.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://status.workos.com/api/v2/status.json",
+        "summary": "https://status.workos.com/api/v2/summary.json",
+        "unresolved": "https://status.workos.com/api/v2/incidents/unresolved.json",
+        "atom": "https://status.workos.com/history.atom",
+        "rss": "https://status.workos.com/history.rss"
+      },
+      "hosts": ["api.workos.com"]
+    },
+    {
+      "id": "xata",
+      "name": "Xata",
+      "category": "database",
+      "statusPage": "https://www.xatastatus.com",
+      "adapter": "incidentio",
+      "endpoints": {
+        "status": "https://www.xatastatus.com/api/v2/status.json",
+        "summary": "https://www.xatastatus.com/api/v2/summary.json",
+        "atom": "https://www.xatastatus.com/history.atom",
+        "rss": "https://www.xatastatus.com/history.rss",
+        "proxy": "https://www.xatastatus.com/proxy/www.xatastatus.com"
+      },
+      "hosts": ["xata.io", "*.xata.sh"]
+    },
+    {
+      "id": "zoom",
+      "name": "Zoom",
+      "category": "communication",
+      "statusPage": "https://www.zoomstatus.com",
+      "adapter": "statuspage",
+      "endpoints": {
+        "status": "https://www.zoomstatus.com/api/v2/status.json",
+        "summary": "https://www.zoomstatus.com/api/v2/summary.json",
+        "unresolved": "https://www.zoomstatus.com/api/v2/incidents/unresolved.json",
+        "atom": "https://www.zoomstatus.com/history.atom",
+        "rss": "https://www.zoomstatus.com/history.rss"
+      },
+      "hosts": ["zoom.us", "api.zoom.us"]
+    }
+  ]
+}

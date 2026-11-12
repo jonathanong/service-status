@@ -3,7 +3,7 @@ import {
   classify,
   firstMatch,
   isNetworkCommand,
-} from "../plugins/service-status/hooks/lib/classify.js";
+} from "../plugins/service-status-hook/hooks/lib/classify.js";
 
 describe("classify", () => {
   it.each([

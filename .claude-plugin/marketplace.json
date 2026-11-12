@@ -8,8 +8,15 @@
   "plugins": [
     {
       "name": "service-status",
-      "description": "Skill + hook: recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply",
+      "description": "Skill: recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply",
       "source": "./plugins/service-status",
+      "category": "productivity",
+      "homepage": "https://github.com/jonathanong/service-status"
+    },
+    {
+      "name": "service-status-hook",
+      "description": "Hook: nudge the agent to the service-status skill when a network command fails like an outage",
+      "source": "./plugins/service-status-hook",
       "category": "productivity",
       "homepage": "https://github.com/jonathanong/service-status"
     }

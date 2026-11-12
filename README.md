@@ -3,12 +3,12 @@
 [![CI](https://github.com/jonathanong/service-status/actions/workflows/ci.yml/badge.svg)](https://github.com/jonathanong/service-status/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/jonathanong/service-status/graph/badge.svg)](https://codecov.io/gh/jonathanong/service-status)
 
-When a `git push`, `gh`, `pnpm install` or API call fails because GitHub, npm or Anthropic is having an incident, coding agents usually treat it as their own bug. They retry in loops, split queries, delete lockfiles and rewrite working code. This plugin helps them recognize the outage, check the provider's status page with one ~200-byte request, and stop.
+When a `git push`, `gh`, `pnpm install` or API call fails because GitHub, npm or Anthropic is having an incident, coding agents usually treat it as their own bug. They retry in loops, split queries, delete lockfiles and rewrite working code. These plugins help them recognize the outage, check the provider's status page with one ~200-byte request, and stop.
 
-It has three parts and needs no server:
+There are three parts, and none needs a server:
 
-- **A skill** (`service-status`). It triggers on outage-shaped failures (5xx, `RPC failed`, `ECONNRESET`, 529 overloaded, release-download timeouts) and stays out of lookalikes (sandbox denials, 401/404, rate limits, mocked 500s in tests). It contains minimal-fetch recipes for every status-page format and [worked scenarios](plugins/service-status/skills/service-status/references/scenarios.md) drawn from real agent sessions.
-- **A hook** (`PostToolUse` / `PostToolUseFailure` on Bash). It makes no network calls. When a network command fails like an outage, it adds one line telling the agent which service is likely affected and to use the skill before changing code. It repeats at most once per service every 10 minutes.
+- **A skill**, in the `service-status` plugin. It triggers on outage-shaped failures (5xx, `RPC failed`, `ECONNRESET`, 529 overloaded, release-download timeouts) and stays out of lookalikes (sandbox denials, 401/404, rate limits, mocked 500s in tests). It contains minimal-fetch recipes for every status-page format and [worked scenarios](plugins/service-status/skills/service-status/references/scenarios.md) drawn from real agent sessions.
+- **A hook**, in the optional `service-status-hook` plugin (`PostToolUse` / `PostToolUseFailure` on Bash). It makes no network calls. When a network command fails like an outage, it adds one line telling the agent which service is likely affected and to use the skill before changing code. It repeats at most once per service every 10 minutes.
 - **An open directory** of status endpoints: **[`services.json`](plugins/service-status/skills/service-status/services.json)**. It has 134 services, and every URL is checked live. PRs are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Install
@@ -17,13 +17,17 @@ It has three parts and needs no server:
 # Claude Code
 /plugin marketplace add jonathanong/service-status
 /plugin install service-status@service-status
+/plugin install service-status-hook@service-status     # optional
 
 # Codex
 codex plugin marketplace add jonathanong/service-status
 codex plugin add service-status@service-status
+codex plugin add service-status-hook@service-status    # optional
 ```
 
-The skill uses `curl` and `jq`, and the hook needs Node 24+. In a sandboxed session, allow the status host for the check. For example, list it in the Bash tool's `allowed_domains`. A sandbox refusal of a status host says nothing about the vendor.
+The skill works on its own: the agent loads it when it sees an outage-shaped error or when you ask "is GitHub down?". Add the hook if you also want a nudge on failed commands that the agent might otherwise retry or work around without stopping to think.
+
+The skill uses `curl` and `jq`. The hook needs Node 24+ and carries its own copy of the directory. In a sandboxed session, allow the status host for the check. For example, list it in the Bash tool's `allowed_domains`. A sandbox refusal of a status host says nothing about the vendor.
 
 ## What the agent sees
 
@@ -85,7 +89,7 @@ Answer quality on prompts that paste the error and ask about it is already good 
 | Yarn install hits an npm registry 503 | 5/5 attribute it to the registry and stop | 0/5: all blamed the eval sandbox's network block instead         |
 | Sync script hits a GitHub GraphQL 502 | 5/5 identify a GitHub-side 502 and stop   | 0/3 (2 excluded): all 3 ran out of turns digging through the CLI |
 
-No run in either arm edited code. The skill loaded in all 10 runs with the plugin. The 2 excluded runs are ones where the agent noticed the CLI was a test stand-in. See [evals/README.md](plugins/service-status/evals/README.md) for how exclusion works and the suite's limits.
+No run in either arm edited code. The skill loaded in all 10 runs with the plugin. The 2 excluded runs are ones where the agent noticed the CLI was a test stand-in. See [evals/README.md](evals/README.md) for how exclusion works and the suite's limits.
 
 ## Development
 
@@ -93,7 +97,8 @@ No run in either arm edited code. The skill loaded in all 10 runs with the plugi
 pnpm install
 pnpm check                 # oxlint, oxfmt, offline directory validation, tests (100% coverage)
 pnpm validate              # also fetches every endpoint in services.json
-claude plugin eval plugins/service-status --allow-tools Bash --trust-plugin    # model evals; costs API credits
+pnpm sync                  # copy services.json into the hook plugin after editing it
+pnpm eval:prepare && claude plugin eval evals --allow-tools Bash --trust-plugin    # model evals; costs API credits
 ```
 
 ## Related

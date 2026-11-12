@@ -1,7 +1,7 @@
 {
   "name": "service-status",
   "version": "0.1.0",
-  "description": "Recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply from Codex.",
+  "description": "Recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply from Codex. Pair with service-status-hook for automatic nudges.",
   "author": {
     "name": "Jonathan Ong",
     "url": "https://github.com/jonathanong"
@@ -11,7 +11,6 @@
   "license": "MIT",
   "keywords": ["outage", "status", "statuspage", "incident", "codex"],
   "skills": "./skills/",
-  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "service-status",
     "shortDescription": "Know when it's them, not you",

@@ -1,0 +1,28 @@
+{
+  "name": "service-status-hook",
+  "version": "0.1.0",
+  "description": "Companion hook for the service-status skill: nudges Codex to check the provider status page when a network command fails like an outage.",
+  "author": {
+    "name": "Jonathan Ong",
+    "url": "https://github.com/jonathanong"
+  },
+  "homepage": "https://github.com/jonathanong/service-status",
+  "repository": "https://github.com/jonathanong/service-status",
+  "license": "MIT",
+  "keywords": ["outage", "status", "hooks", "codex"],
+  "hooks": "./hooks/codex-hooks.json",
+  "interface": {
+    "displayName": "service-status hook",
+    "shortDescription": "Nudge on outage-shaped failures",
+    "longDescription": "A network-free hook that spots outage-shaped failures (5xx, RPC failed, 529 overloaded) from git, gh, package managers and curl, and points the agent at the service-status skill.",
+    "developerName": "Jonathan Ong",
+    "category": "Coding",
+    "capabilities": ["Read"],
+    "websiteURL": "https://github.com/jonathanong/service-status",
+    "privacyPolicyURL": "https://github.com/jonathanong/service-status",
+    "termsOfServiceURL": "https://github.com/jonathanong/service-status",
+    "defaultPrompt": [],
+    "brandColor": "#16A34A",
+    "screenshots": []
+  }
+}

@@ -11,7 +11,8 @@ These are `claude plugin eval` cases for the `service-status` skill and hook. Th
 Cases tagged `holdout` were written after the skill description and weren't used to tune it.
 
 ```sh
-cd plugins/service-status
+pnpm eval:prepare     # from the repo root: copies the skill and hook into evals/ (gitignored)
+cd evals
 claude plugin eval . --allow-tools Bash --trust-plugin                                   # outage + lookalike cases, with a no-plugin baseline
 claude plugin eval . --tag agentic --scaffold --allow-tools Bash Edit Write --trust-plugin
 claude plugin eval . --runs 1 --ablation none --case 'outage-*' --allow-tools Bash      # cheap iteration
@@ -26,7 +27,7 @@ claude plugin eval . --runs 1 --ablation none --case 'outage-*' --allow-tools Ba
   To exclude them, re-score the `--json` output:
 
   ```sh
-  node ../../scripts/eval-summary.js evals/results/<run>.json        # from plugins/service-status
+  node ../scripts/eval-summary.js cases/results/<run>.json        # from evals/
   ```
 
   For `agentic-*` cases, this drops runs whose final answer calls the tool a stub or fake, says it's hard-coded, or says it never makes a request. Then it recomputes each arm's score. It always prints how many runs it dropped from each arm. Agents with and without the skill investigate differently, so uneven exclusion can bias Δ. Read the counts alongside the scores.

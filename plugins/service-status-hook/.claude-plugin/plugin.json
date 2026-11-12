@@ -1,0 +1,12 @@
+{
+  "name": "service-status-hook",
+  "description": "Companion hook for the service-status skill: when a Bash network command fails like a third-party outage, nudge the agent to check the provider's status page before changing code. Network-free.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jonathan Ong"
+  },
+  "homepage": "https://github.com/jonathanong/service-status",
+  "repository": "https://github.com/jonathanong/service-status",
+  "license": "MIT",
+  "keywords": ["outage", "status", "hooks", "github", "npm"]
+}
