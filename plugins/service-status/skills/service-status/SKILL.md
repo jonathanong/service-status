@@ -1,6 +1,6 @@
 ---
 name: service-status
-description: Check whether a failure is a third-party outage (GitHub, npm, PyPI, Docker Hub, Anthropic, OpenAI, AWS, GCP, Cloudflare, Vercel and ~130 more) by reading the provider's status page with a minimal fetch, before changing code or retrying. Use proactively, without being asked, as soon as a git, gh, package-manager, CLI, CI or API call fails with a 5xx, Bad Gateway, Service Unavailable, Gateway Timeout, 529 Overloaded, RPC failed, early EOF, ECONNRESET, ETIMEDOUT, TLS handshake timeout, "Could not resolve host" for a public host, or a release/asset download failure — and whenever a hook message mentions service-status.
+description: Check whether a failure is a third-party outage (GitHub, npm, PyPI, Docker Hub, Anthropic, OpenAI, AWS, GCP, Cloudflare, Vercel, Microsoft 365 and ~160 more) by reading the provider's status page with a minimal fetch, before changing code or retrying. Use proactively, without being asked, as soon as a git, gh, package-manager, CLI, CI or API call fails with a 5xx, Bad Gateway, Service Unavailable, Gateway Timeout, 529 Overloaded, RPC failed, early EOF, ECONNRESET, ETIMEDOUT, TLS handshake timeout, "Could not resolve host" for a public host, or a release/asset download failure — and whenever a hook message mentions service-status.
 when_to_use: 'Triggers: "HTTP 502: Bad Gateway (https://api.github.com/graphql)", "error: RPC failed; HTTP 500", "GitHub GraphQL request failed: 502", "Download failed: 504 Gateway Time-out for https://github.com/.../releases/download/...", "ERR_PNPM_META_FETCH_FAIL ... Service Unavailable", "overloaded_error", flaky CI that fails in setup/download steps, or the user asking "is GitHub/npm/X down?". Not for: sandbox denials (Operation not permitted, sandbox_violations, "sandbox proxy"), 401/403 auth, 404, rate limits (429, secondary rate limit), localhost/docker.sock errors, or tests asserting on mocked 500s.'
 ---
 
@@ -44,7 +44,7 @@ Never download a whole feed or `summary.json` just to learn "is it up?". Pick by
 | `aws`        | `curl -s https://status.aws.amazon.com/rss/<service>-<region>.rss \| grep -c '<item>'` (≈719; 0 = healthy) | `curl -s --compressed $events \| iconv -f UTF-16 -t UTF-8 \| jq -r '.[] \| select(.status != "0") \| [.service, .summary] \| @tsv'`                 |
 | `feed-only`  | `curl -s --compressed $atom \| head -c 3000 \| grep -oE '<(updated\|title)>[^<]*' \| head -4`              | read the newest entry's body for "Resolved"                                                                                                         |
 
-Other adapters (`instatus`, `betterstack`, `azure`, `azure-devops`, `slack`, `heroku`, `apple`) and the measured sizes are in [references/adapters.md](references/adapters.md).
+Other adapters (`instatus`, `betterstack`, `azure`, `azure-devops`, `microsoft365`, `slack`, `heroku`, `apple`) and the measured sizes are in [references/adapters.md](references/adapters.md).
 
 Rules:
 

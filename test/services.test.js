@@ -60,6 +60,8 @@ describe("serviceMentioner", () => {
   const mentions = serviceMentioner([
     { name: "GitHub", hosts: ["github.com"], commands: ["gh"] },
     { name: "Render", hosts: ["render.com"] },
+    { name: "Box", hosts: ["api.box.com"] },
+    { name: "Segment", hosts: ["api.segment.io"] },
     { name: "Bare Co" },
   ]);
 
@@ -70,6 +72,10 @@ describe("serviceMentioner", () => {
     ["Bare Co returned 503", true],
     ["Render error in component", false],
     ["https://api.render.com 503", true],
+    ["Box shadow overflowed by 3px", false],
+    ["Segment fault (core dumped)", false],
+    ["POST https://api.box.com/2.0/files 503", true],
+    ["POST https://api.segment.io/v1/track 502", true],
     ["nothing here", false],
   ])("%s → %s", (text, expected) => {
     expect(mentions(text)).toBe(expected);

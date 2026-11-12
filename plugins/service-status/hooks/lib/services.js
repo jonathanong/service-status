@@ -35,6 +35,7 @@ export function statusUrl(service) {
 // Names that are also everyday words ("Render error", "Modal dialog") only
 // count through their hosts.
 const AMBIGUOUS_NAMES = new Set([
+  "Box",
   "Convex",
   "Depot",
   "Harness",
@@ -42,11 +43,14 @@ const AMBIGUOUS_NAMES = new Set([
   "Linear",
   "Miro",
   "Modal",
+  "Mux",
   "Neon",
   "Notion",
+  "Plaid",
   "Prisma",
   "Render",
   "Resend",
+  "Segment",
   "Socket",
   "Square",
 ]);
