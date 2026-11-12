@@ -4,7 +4,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 
-const bin = new URL("../plugins/service-status/hooks/outage-nudge.js", import.meta.url).pathname;
+const bin = new URL("../plugins/service-status-hook/hooks/outage-nudge.js", import.meta.url)
+  .pathname;
 const exec = (input) =>
   execFileSync(process.execPath, [bin], {
     input,

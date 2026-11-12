@@ -1,6 +1,6 @@
 {
   "name": "service-status",
-  "description": "Recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply instead of debugging code that isn't broken",
+  "description": "Recognize third-party outages (GitHub, npm, AI APIs, clouds) and check status pages cheaply instead of debugging code that isn't broken. Pair with service-status-hook for automatic nudges.",
   "version": "0.1.0",
   "author": {
     "name": "Jonathan Ong"
@@ -8,5 +8,5 @@
   "homepage": "https://github.com/jonathanong/service-status",
   "repository": "https://github.com/jonathanong/service-status",
   "license": "MIT",
-  "keywords": ["outage", "status", "statuspage", "incident", "github", "npm", "hooks", "skill"]
+  "keywords": ["outage", "status", "statuspage", "incident", "github", "npm", "skill"]
 }

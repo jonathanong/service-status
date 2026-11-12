@@ -10,7 +10,7 @@ skill:
 
 hook:
   - changed-files:
-      - any-glob-to-any-file: "plugins/service-status/hooks/**"
+      - any-glob-to-any-file: "plugins/service-status-hook/**"
 
 evals:
   - changed-files:

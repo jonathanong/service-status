@@ -1,0 +1,31 @@
+{
+  "description": "Nudge the agent toward the service-status skill when a network command fails like a third-party outage.",
+  "hooks": {
+    "PostToolUseFailure": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/outage-nudge.js"],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/outage-nudge.js"],
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

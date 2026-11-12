@@ -3,7 +3,7 @@ import {
   matchServices,
   serviceMentioner,
   statusUrl,
-} from "../plugins/service-status/hooks/lib/services.js";
+} from "../plugins/service-status-hook/hooks/lib/services.js";
 
 const services = [
   { id: "github", hosts: ["github.com", "*.githubusercontent.com"], commands: ["git", "gh"] },

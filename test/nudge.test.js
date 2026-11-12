@@ -7,7 +7,7 @@ import {
   extractOutput,
   run,
   shouldNotify,
-} from "../plugins/service-status/hooks/lib/nudge.js";
+} from "../plugins/service-status-hook/hooks/lib/nudge.js";
 
 const tmp = () => mkdtempSync(join(tmpdir(), "ss-test-"));
 

@@ -1,7 +1,9 @@
 node_modules/
 coverage/
 test-results/
-plugins/service-status/evals/results/
+evals/cases/results/
 .DS_Store
 .claude/settings.local.json
 .claude/worktrees/
+evals/skills/
+evals/hooks/

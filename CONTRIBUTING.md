@@ -17,8 +17,11 @@ The most useful contributions are to the directory: [`services.json`](plugins/se
 
    ```sh
    pnpm install
+   pnpm sync            # copy services.json into the hook plugin, which is installed separately
    pnpm validate        # schema, invariants, and a live fetch of every endpoint
    ```
+
+   `pnpm check` fails if the two copies of `services.json` differ.
 
    CI runs the same live check on every PR that changes `services.json`.
 
@@ -30,7 +33,7 @@ Rules:
 
 ## Hook and skill changes
 
-- The hook (`plugins/service-status/hooks/`) must stay dependency-free, network-free and fast. It runs after every Bash call.
+- The hook (`plugins/service-status-hook/hooks/`) must stay dependency-free, network-free and fast. It runs after every Bash call.
 - Precision matters more than recall. Every new pattern needs a case in `test/fixtures/mined-cases.json` or `test/classify.test.js`, and lookalikes (sandbox, auth, 404, rate limits, mocked 500s) must stay quiet.
 - `pnpm check` must pass with 100% coverage.
-- For skill wording changes, run the evals (see [`plugins/service-status/evals/README.md`](plugins/service-status/evals/README.md)).
+- For skill wording changes, run the evals (see [`evals/README.md`](evals/README.md)).

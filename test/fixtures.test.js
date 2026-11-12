@@ -3,8 +3,11 @@
 // the skill's description covers them instead.
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { classify } from "../plugins/service-status/hooks/lib/classify.js";
-import { loadServices, serviceMentioner } from "../plugins/service-status/hooks/lib/services.js";
+import { classify } from "../plugins/service-status-hook/hooks/lib/classify.js";
+import {
+  loadServices,
+  serviceMentioner,
+} from "../plugins/service-status-hook/hooks/lib/services.js";
 
 const cases = JSON.parse(
   readFileSync(new URL("./fixtures/mined-cases.json", import.meta.url), "utf8"),

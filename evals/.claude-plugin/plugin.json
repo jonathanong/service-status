@@ -1,0 +1,6 @@
+{
+  "name": "service-status",
+  "description": "Dev-only eval harness: the service-status skill and hook together (symlinked). Not published.",
+  "version": "0.0.0",
+  "experimental": { "evals": "cases" }
+}
