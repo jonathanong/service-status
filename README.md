@@ -78,7 +78,14 @@ These numbers come from sessions mined from real Claude Code and Codex use, rewr
 | Hook                                             | flags 17 of 21 (the 4 misses carry no outage signal in the tool result, such as an API error in the agent's own turn or a bare `504` from `curl -w`) | 0 false positives across 32 cases, plus 0 on a larger, noisier set of 266 mined tool failures |
 | Skill trigger (`claude plugin eval`, 1 run each) | loaded in 7 of 7 cases                                                                                                                               | stayed out in 5 of 5 cases                                                                    |
 
-Answer quality on prompts that paste the error and ask about it is already good without the plugin. The plugin's value is earlier in the task: noticing the outage before the agent starts "fixing" code. See [evals/README.md](plugins/service-status/evals/README.md) for the suite and its limits.
+Answer quality on prompts that paste the error and ask about it is already good without the plugin. The difference shows up mid-task. In two agentic cases, the agent is asked to get a script passing, and a vendored CLI fails partway through with a GitHub 502 or an npm registry 503. Each case ran 5 times with the plugin and 5 times without:
+
+| Case                                  | With plugin                               | Without                                                          |
+| ------------------------------------- | ----------------------------------------- | ---------------------------------------------------------------- |
+| Yarn install hits an npm registry 503 | 5/5 attribute it to the registry and stop | 0/5: all blamed the eval sandbox's network block instead         |
+| Sync script hits a GitHub GraphQL 502 | 5/5 identify a GitHub-side 502 and stop   | 0/3 (2 excluded): all 3 ran out of turns digging through the CLI |
+
+No run in either arm edited code. The skill loaded in all 10 runs with the plugin. The 2 excluded runs are ones where the agent noticed the CLI was a test stand-in. See [evals/README.md](plugins/service-status/evals/README.md) for how exclusion works and the suite's limits.
 
 ## Development
 
