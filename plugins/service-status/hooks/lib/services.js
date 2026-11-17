@@ -1,5 +1,6 @@
 // Map hosts and commands seen in a failure to directory entries.
 import { readFileSync } from "node:fs";
+import { programs } from "./classify.js";
 
 export function loadServices(path) {
   return JSON.parse(readFileSync(path, "utf8")).services;
@@ -64,4 +65,41 @@ export function serviceMentioner(services) {
     ...(s.commands ?? []).map((c) => new RegExp(`(?:^|[\\s>])${c}:\\s`)),
   ]);
   return (line) => tests.some((re) => re.test(line));
+}
+
+// Directory CLIs that also do local work (builds, tests) or talk to the
+// user's own endpoints and databases, so a timeout from them says nothing about
+// the service. git and the JS package managers are left to NETWORK_COMMANDS,
+// which only counts their network subcommands (`pnpm install`, not `pnpm
+// vitest`). They all still count through hosts or a `<cmd>: ` prefix.
+const LOCAL_CAPABLE_COMMANDS = new Set([
+  "bun",
+  "cockroach",
+  "conda",
+  "fastlane",
+  "git",
+  "gradle",
+  "gradlew",
+  "mamba",
+  "mix",
+  "mongosh",
+  "newman",
+  "ngrok",
+  "npm",
+  "npx",
+  "pnpm",
+  "prisma",
+  "sam",
+  "xcodebuild",
+  "xcrun",
+  "yarn",
+]);
+
+// Build a predicate: does the command run a directory CLI as a program, not
+// just mention it (`echo m365`, `grep stripe`)?
+export function serviceCommandMatcher(services) {
+  const names = new Set(
+    services.flatMap((s) => s.commands ?? []).filter((c) => !LOCAL_CAPABLE_COMMANDS.has(c)),
+  );
+  return (command) => programs(command).some((p) => names.has(p));
 }

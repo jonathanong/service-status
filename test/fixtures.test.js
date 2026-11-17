@@ -4,21 +4,25 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { classify } from "../plugins/service-status/hooks/lib/classify.js";
-import { loadServices, serviceMentioner } from "../plugins/service-status/hooks/lib/services.js";
+import {
+  loadServices,
+  serviceCommandMatcher,
+  serviceMentioner,
+} from "../plugins/service-status/hooks/lib/services.js";
 
 const cases = JSON.parse(
   readFileSync(new URL("./fixtures/mined-cases.json", import.meta.url), "utf8"),
 );
-const mention = serviceMentioner(
-  loadServices(
-    new URL("../plugins/service-status/skills/service-status/services.json", import.meta.url),
-  ),
+const services = loadServices(
+  new URL("../plugins/service-status/skills/service-status/services.json", import.meta.url),
 );
+const mention = serviceMentioner(services);
+const runsCli = serviceCommandMatcher(services);
 
 describe("mined cases", () => {
   it.each(cases.map((c) => [c.label, c.category, c]))("%s: %s", (_label, _category, c) => {
     const expected = c.label === "outage" && c.hook !== "miss";
-    expect(classify(c.command, c.output, mention).outage).toBe(expected);
+    expect(classify(c.command, c.output, mention, runsCli).outage).toBe(expected);
   });
 
   it("keeps a balanced, non-trivial set", () => {
