@@ -33,6 +33,22 @@
       "hosts": ["*.ably.io", "*.ably.net", "*.ably-realtime.com"]
     },
     {
+      "id": "airbyte",
+      "name": "Airbyte",
+      "category": "database",
+      "statusPage": "https://status.airbyte.com",
+      "adapter": "instatus",
+      "endpoints": {
+        "status": "https://status.airbyte.com/summary.json",
+        "components": "https://status.airbyte.com/v2/components.json",
+        "atom": "https://status.airbyte.com/history.atom",
+        "rss": "https://status.airbyte.com/history.rss"
+      },
+      "hosts": ["api.airbyte.com", "cloud.airbyte.com"],
+      "components": ["Data Sync", "WebApp", "Airbyte API", "Connector Builder"],
+      "notes": "Instatus page for Airbyte Cloud; self-hosted (abctl) installs are not covered. summary.json lists active incidents; components.json has ~90 per-connector rows."
+    },
+    {
       "id": "airtable",
       "name": "Airtable",
       "category": "productivity",
