@@ -38,6 +38,12 @@ describe("matchServices", () => {
     ]);
   });
 
+  it("matches a command run by path", () => {
+    expect(
+      matchServices(services, "/usr/local/bin/pnpm add y", "ECONNRESET").map((s) => s.id),
+    ).toEqual(["npm"]);
+  });
+
   it("returns nothing when neither matches", () => {
     expect(matchServices(services, "docker pull", "timeout")).toEqual([]);
   });

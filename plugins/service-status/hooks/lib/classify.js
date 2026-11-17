@@ -72,12 +72,29 @@ export function isNetworkCommand(command) {
   return NETWORK_COMMANDS.test(command);
 }
 
-// Judged by the first real program (after any `cd`): `sed ... | grep` reads a
-// log, `cd app && pnpm install` does not. Quoted pipes make full parsing moot.
-export function isLocalOnlyCommand(command) {
-  const first = command
+// Split on shell separators outside quotes: `echo "a | m365 x"` is one segment.
+function segments(command) {
+  return command
+    .replace(/"[^"]*"|'[^']*'/g, (q) => q.replace(/[;&|\n]/g, " "))
     .split(/\s*(?:&&|\|\||;|\||\n)\s*/)
-    .find((seg) => seg && !/^\s*cd(?:\s|$)/.test(seg));
+    .filter(Boolean);
+}
+
+// The program each segment runs, skipping `VAR=value` prefixes, a leading `(`
+// and any directory: `cd app && FOO=1 m365 status | jq .` -> ["cd", "m365", "jq"].
+export function programs(command) {
+  return segments(command)
+    .map(
+      (seg) =>
+        /^\(?\s*(?:\w+=(?:"[^"]*"|'[^']*'|\S*)\s+)*(?:\S*\/)?([\w.-]+)(?=[\s)]|$)/.exec(seg)?.[1],
+    )
+    .filter(Boolean);
+}
+
+// Judged by the first real program (after any `cd`): `sed ... | grep` reads a
+// log, `cd app && pnpm install` does not.
+export function isLocalOnlyCommand(command) {
+  const first = segments(command).find((seg) => !/^\s*cd(?:\s|$)/.test(seg));
   return first !== undefined && LOCAL_ONLY_SEGMENT.test(first);
 }
 
@@ -99,13 +116,20 @@ function lineAround(text, index) {
 // Returns { outage: false, reason } or { outage: true, signal, evidence }.
 // `mentionsService(text)` reports whether the text names a known public service
 // or host; it lets wrapper CLIs and scripts count, not just git/gh/npm.
-export function classify(command, output, mentionsService = () => false) {
+// `runsServiceCli(command)` reports whether the command runs a directory CLI
+// (m365, stripe, netlify) whose errors often name no host.
+export function classify(
+  command,
+  output,
+  mentionsService = () => false,
+  runsServiceCli = () => false,
+) {
   if (!output) return { outage: false, reason: "no-output" };
   const blocker = firstMatch(NOT_OUTAGE_PATTERNS, output);
   if (blocker) return { outage: false, reason: blocker.id };
   const hit = firstMatch(OUTAGE_PATTERNS, output);
   if (!hit) return { outage: false, reason: "no-signal" };
-  const network = isNetworkCommand(command);
+  const network = isNetworkCommand(command) || runsServiceCli(command);
   if (!network && isLocalOnlyCommand(command)) return { outage: false, reason: "local-command" };
   if (!network && !mentionsService(`${command}\n${output}`)) {
     return { outage: false, reason: "unknown-service" };

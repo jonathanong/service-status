@@ -3,7 +3,14 @@ import {
   classify,
   firstMatch,
   isNetworkCommand,
+  programs,
 } from "../plugins/service-status/hooks/lib/classify.js";
+import { DEFAULT_SERVICES } from "../plugins/service-status/hooks/lib/nudge.js";
+import {
+  loadServices,
+  serviceCommandMatcher,
+  serviceMentioner,
+} from "../plugins/service-status/hooks/lib/services.js";
 
 describe("classify", () => {
   it.each([
@@ -119,5 +126,48 @@ describe("gating", () => {
 
   it("prefers a network command over a leading reader", () => {
     expect(classify("cat a.log; gh api x", "gh: HTTP 503")).toMatchObject({ outage: true });
+  });
+});
+
+describe("programs", () => {
+  it.each([
+    ["m365 status", ["m365"]],
+    ["cd app && FOO=1 netlify deploy | jq .", ["cd", "netlify", "jq"]],
+    ["(stripe listen)", ["stripe"]],
+    ["'quoted' arg; ./gradlew test", ["gradlew"]],
+    ["/usr/local/bin/stripe listen", ["stripe"]],
+    [`TAG="release candidate" m365 status`, ["m365"]],
+    [`echo "old | m365 status" | node notify.js`, ["echo", "node"]],
+  ])("%s", (command, expected) => {
+    expect(programs(command)).toEqual(expected);
+  });
+});
+
+describe("directory CLIs without a host in the output", () => {
+  const services = loadServices(DEFAULT_SERVICES);
+  const run = (command, output) =>
+    classify(command, output, serviceMentioner(services), serviceCommandMatcher(services));
+
+  it.each([
+    ["m365 status", "Error: connect ETIMEDOUT"],
+    ["stripe listen", "Error: 502 Bad Gateway"],
+    ["cd site && NODE_ENV=production netlify deploy --prod", "Error: socket hang up"],
+  ])("flags %s", (command, output) => {
+    expect(run(command, output)).toMatchObject({ outage: true });
+  });
+
+  it.each([
+    ["xcodebuild test -scheme App", "Error: connect ETIMEDOUT", "unknown-service"],
+    ["gradlew test", "java.net.SocketException: ECONNRESET", "unknown-service"],
+    ["prisma migrate deploy", "Error: connect ETIMEDOUT", "unknown-service"],
+    ["node sync.js m365 | tee out.log", "Error: connect ETIMEDOUT", "unknown-service"],
+    ["echo m365 | node notify.js", "Error: connect ETIMEDOUT", "local-command"],
+    [`echo "old | m365 status" | node notify.js`, "Error: connect ETIMEDOUT", "local-command"],
+    ["pnpm vitest", "Error: Test timed out in 5000ms. ECONNRESET in fixture", "unknown-service"],
+    ["npx vitest run", "Error: read ECONNRESET", "local-command"],
+    ["git status", "Error: connect ETIMEDOUT", "local-command"],
+    ["sam local invoke Fn", "Error: connect ETIMEDOUT", "unknown-service"],
+  ])("does not flag %s", (command, output, reason) => {
+    expect(run(command, output)).toEqual({ outage: false, reason });
   });
 });

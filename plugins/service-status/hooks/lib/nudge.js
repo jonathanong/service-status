@@ -6,7 +6,13 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { classify } from "./classify.js";
-import { loadServices, matchServices, serviceMentioner, statusUrl } from "./services.js";
+import {
+  loadServices,
+  matchServices,
+  serviceCommandMatcher,
+  serviceMentioner,
+  statusUrl,
+} from "./services.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_SERVICES = join(here, "..", "..", "skills", "service-status", "services.json");
@@ -70,7 +76,12 @@ export function run(raw, { servicesPath = DEFAULT_SERVICES, stateDir, now = Date
   } catch {
     // missing or malformed directory: still classify, without service names
   }
-  const result = classify(command, output, serviceMentioner(services));
+  const result = classify(
+    command,
+    output,
+    serviceMentioner(services),
+    serviceCommandMatcher(services),
+  );
   if (!result.outage) return "";
   const matched = matchServices(services, command, output);
   const key = matched.map((s) => s.id).join(",") || result.signal;
