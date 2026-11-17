@@ -136,6 +136,8 @@ describe("programs", () => {
     ["(stripe listen)", ["stripe"]],
     ["'quoted' arg; ./gradlew test", ["gradlew"]],
     ["/usr/local/bin/stripe listen", ["stripe"]],
+    [`TAG="release candidate" m365 status`, ["m365"]],
+    [`echo "old | m365 status" | node notify.js`, ["echo", "node"]],
   ])("%s", (command, expected) => {
     expect(programs(command)).toEqual(expected);
   });
@@ -160,6 +162,7 @@ describe("directory CLIs without a host in the output", () => {
     ["prisma migrate deploy", "Error: connect ETIMEDOUT", "unknown-service"],
     ["node sync.js m365 | tee out.log", "Error: connect ETIMEDOUT", "unknown-service"],
     ["echo m365 | node notify.js", "Error: connect ETIMEDOUT", "local-command"],
+    [`echo "old | m365 status" | node notify.js`, "Error: connect ETIMEDOUT", "local-command"],
     ["pnpm vitest", "Error: Test timed out in 5000ms. ECONNRESET in fixture", "unknown-service"],
     ["npx vitest run", "Error: read ECONNRESET", "local-command"],
     ["git status", "Error: connect ETIMEDOUT", "local-command"],

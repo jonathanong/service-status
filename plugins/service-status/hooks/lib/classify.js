@@ -72,16 +72,22 @@ export function isNetworkCommand(command) {
   return NETWORK_COMMANDS.test(command);
 }
 
-// Split on shell separators. Quoted pipes make full parsing moot.
+// Split on shell separators outside quotes: `echo "a | m365 x"` is one segment.
 function segments(command) {
-  return command.split(/\s*(?:&&|\|\||;|\||\n)\s*/).filter(Boolean);
+  return command
+    .replace(/"[^"]*"|'[^']*'/g, (q) => q.replace(/[;&|\n]/g, " "))
+    .split(/\s*(?:&&|\|\||;|\||\n)\s*/)
+    .filter(Boolean);
 }
 
 // The program each segment runs, skipping `VAR=value` prefixes, a leading `(`
 // and any directory: `cd app && FOO=1 m365 status | jq .` -> ["cd", "m365", "jq"].
 export function programs(command) {
   return segments(command)
-    .map((seg) => /^\(?\s*(?:\w+=\S*\s+)*(?:\S*\/)?([\w.-]+)(?=[\s)]|$)/.exec(seg)?.[1])
+    .map(
+      (seg) =>
+        /^\(?\s*(?:\w+=(?:"[^"]*"|'[^']*'|\S*)\s+)*(?:\S*\/)?([\w.-]+)(?=[\s)]|$)/.exec(seg)?.[1],
+    )
     .filter(Boolean);
 }
 

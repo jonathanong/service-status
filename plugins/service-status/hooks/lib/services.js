@@ -12,8 +12,9 @@ function hostPattern(host) {
   return new RegExp(`(?:^|[^\\w.-])(?:[\\w-]+\\.)*${escaped}(?![\\w-])`, "i");
 }
 
+// `/usr/local/bin/stripe` counts as `stripe`.
 function commandPattern(cmd) {
-  return new RegExp(`(?:^|[\\s;&|(])${cmd}(?=$|[\\s;&|)])`);
+  return new RegExp(`(?:^|[\\s;&|(/])${cmd}(?=$|[\\s;&|)])`);
 }
 
 // Hosts in the error text win over the command name: `pnpm install` failing on
