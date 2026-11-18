@@ -71,7 +71,7 @@ const LOCAL_ONLY_SEGMENT =
 // Commands that print text people wrote: issue and PR bodies, comments, diffs,
 // commit messages, file contents. That text often quotes old errors.
 const CONTENT_READERS =
-  /(?:^|[\s;&|(])(?:gh\s+(?:issue|pr)\s+(?:view|list|diff)|gh\s+search\s+(?:issues|prs|code|commits)|gh\s+api\b[^;&|\n]*?\/(?:issues|pulls|comments|contents|commits|compare|readme)\b[^;&|\n]*|git\b[^;&|\n]*?\s(?:diff|show|log|blame|grep))(?=$|[\s;&|)])/;
+  /(?:^|[\s;&|(])(?:gh\s+(?:issue|pr)\s+(?:view|list|diff)|gh\s+search\s+(?:issues|prs|code|commits)|gh\s+api\b[^;&|\n]*?\/(?:issues|pulls|comments|contents|commits|compare|readme)\b[^;&|\n]*|git(?:\s+(?:-[Cc]\s+\S+|--[\w-]+(?:=\S+)?|-[pP]))*\s+(?:diff|show|log|blame|grep))(?=$|[\s;&|)])/;
 
 // A failing gh or git prints its own error instead of the content, so the
 // error is the first output line: `HTTP 502: Bad Gateway (...)`, `gh: ...`,
@@ -79,7 +79,7 @@ const CONTENT_READERS =
 // indented commit-message or diff line never counts. gh's `HTTP 504: ...
 // (https://...)` shape also counts after a script's own prefix.
 const CLI_ERROR_LINE =
-  /^(?:HTTP(?:\/[\d.]+)?:?\s+\d{3}\b|gh: |error: |fatal: |remote: |(?:Get|Post|Put|Patch|Delete|Head) "https?:\/\/|error connecting to )|\bHTTP \d{3}: .*\(https?:\/\/[^\s)]+\)$/;
+  /^(?:HTTP(?:\/[\d.]+)?:?\s+\d{3}\b|gh: |error: |fatal: |remote: |(?:Get|Post|Put|Patch|Delete|Head) "https?:\/\/|error connecting to )|^\S.*\bHTTP \d{3}: .*\(https?:\/\/[^\s)]+\)$/;
 
 export function isContentReader(command) {
   return CONTENT_READERS.test(command);

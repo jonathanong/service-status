@@ -34,6 +34,8 @@ describe("isContentReader", () => {
     "git push",
     "git fetch origin main",
     "pnpm install",
+    "git fetch origin log",
+    "git push origin show",
   ])("no: %s", (c) => {
     expect(isContentReader(c)).toBe(false);
   });
@@ -64,6 +66,10 @@ describe("content readers", () => {
       'Tests 3 passed\ndiff --git a/t.js b/t.js\n+  expect(classify("gh api x", "gh: HTTP 503")).toBe(1);\n fatal: early EOF',
     ],
     ["gh pr diff 5", '+    ["stripe listen", "Error: 502 Bad Gateway"],'],
+    [
+      "gh api repos/acme/app/issues/3/comments --jq '.[].body'",
+      "    HTTP 502: Bad Gateway (https://api.github.com/graphql)",
+    ],
   ])("does not flag %s", (command, output) => {
     expect(run(command, output)).toEqual({ outage: false, reason: "quoted-content" });
   });
@@ -88,5 +94,13 @@ describe("content readers", () => {
       outage: false,
       reason: "local-command",
     });
+  });
+});
+
+describe("git branch names that look like readers", () => {
+  it("flags a fetch of a branch named log", () => {
+    expect(
+      run("git fetch origin log", "remote: Counting objects\nerror: RPC failed; HTTP 502 curl 22"),
+    ).toMatchObject({ outage: true, signal: "http-5xx" });
   });
 });
