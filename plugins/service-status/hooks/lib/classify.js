@@ -68,6 +68,31 @@ const NETWORK_COMMANDS =
 const LOCAL_ONLY_SEGMENT =
   /^\s*(?:\w+=\S*\s+)*(?:cd|ls|cat|head|tail|grep|rg|sed|awk|jq|cut|sort|uniq|wc|diff|find|echo|printf|less|python3?|sleep|true|vitest|jest|pytest|tsc|(?:npm|pnpm|yarn|bun)\s+(?:run\s+)?test|(?:pnpm|npm)\s+exec\s+(?:vitest|jest)|npx\s+(?:vitest|jest)|cargo\s+test|go\s+test|git\s+(?:grep|show|log|diff|status))\b/;
 
+// Commands that print text people wrote: issue and PR bodies, comments, diffs,
+// commit messages, file contents. That text often quotes old errors.
+const CONTENT_READERS =
+  /(?:^|[\s;&|(])(?:gh\s+(?:issue|pr)\s+(?:view|list|diff)|gh\s+search\s+(?:issues|prs|code|commits)|gh\s+api\b[^;&|\n]*?\/(?:issues|pulls|comments|contents|commits|compare|readme)\b[^;&|\n]*|git\b[^;&|\n]*?\s(?:diff|show|log|blame|grep))(?=$|[\s;&|)])/;
+
+// A failing gh or git prints its own error instead of the content, so the
+// error is the first output line: `HTTP 502: Bad Gateway (...)`, `gh: ...`,
+// `Post "https://api.github.com/graphql": ...`, `fatal: ...`. Untrimmed, so an
+// indented commit-message or diff line never counts. gh's `HTTP 504: ...
+// (https://...)` shape also counts after a script's own prefix.
+const CLI_ERROR_LINE =
+  /^(?:HTTP(?:\/[\d.]+)?:?\s+\d{3}\b|gh: |error: |fatal: |remote: |(?:Get|Post|Put|Patch|Delete|Head) "https?:\/\/|error connecting to )|\bHTTP \d{3}: .*\(https?:\/\/[^\s)]+\)$/;
+
+export function isContentReader(command) {
+  return CONTENT_READERS.test(command);
+}
+
+// The first non-blank line, after Claude Code's `Exit code N` prefix.
+function firstOutputLine(output) {
+  return output
+    .replace(/^Exit code \d+\n/, "")
+    .split("\n")
+    .find((l) => l.trim() !== "");
+}
+
 export function isNetworkCommand(command) {
   return NETWORK_COMMANDS.test(command);
 }
@@ -127,8 +152,13 @@ export function classify(
   if (!output) return { outage: false, reason: "no-output" };
   const blocker = firstMatch(NOT_OUTAGE_PATTERNS, output);
   if (blocker) return { outage: false, reason: blocker.id };
-  const hit = firstMatch(OUTAGE_PATTERNS, output);
+  let hit = firstMatch(OUTAGE_PATTERNS, output);
   if (!hit) return { outage: false, reason: "no-signal" };
+  if (isContentReader(command)) {
+    const first = firstOutputLine(output);
+    hit = CLI_ERROR_LINE.test(first) && firstMatch(OUTAGE_PATTERNS, first);
+    if (!hit) return { outage: false, reason: "quoted-content" };
+  }
   const network = isNetworkCommand(command) || runsServiceCli(command);
   if (!network && isLocalOnlyCommand(command)) return { outage: false, reason: "local-command" };
   if (!network && !mentionsService(`${command}\n${output}`)) {

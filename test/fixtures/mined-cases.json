@@ -129,7 +129,6 @@
     "output": "API Error: 529 Overloaded. This is a server-side issue, usually temporary — try again in a moment. If it persists, check https://status.claude.com.",
     "hook": "miss"
   },
-
   {
     "label": "not-outage",
     "category": "sandbox-known-hosts",
@@ -321,5 +320,17 @@
     "category": "local-fetch-localhost",
     "command": "npm test",
     "output": "FetchError: request to http://localhost:3000/health failed, reason: socket hang up"
+  },
+  {
+    "label": "not-outage",
+    "category": "issue-body-quotes-error",
+    "command": "gh issue view 3 --repo acme/app --json title,body,state,author,labels,comments 2>&1",
+    "output": "{\"author\":{\"login\":\"octo\"},\"body\":\"## Problem\\n\\nThe hook stays quiet when a CLI fails with a timeout.\\n\\n```js\\nclassify(\\\"m365 status\\\", \\\"Error: connect ETIMEDOUT\\\", serviceMentioner(services))\\n```\",\"state\":\"OPEN\",\"title\":\"Hook ignores hostless failures\"}"
+  },
+  {
+    "label": "not-outage",
+    "category": "diff-quotes-error",
+    "command": "pnpm exec oxfmt --check . 2>&1 | tail -2; pnpm test 2>&1 | tail -10; git diff",
+    "output": "All matched files use the correct format.\nTests  176 passed (176)\ndiff --git a/test/classify.test.js b/test/classify.test.js\n@@ -125,3 +125,7 @@\n+  it(\"prefers a network command over a leading reader\", () => {\n+    expect(classify(\"cat a.log; gh api x\", \"gh: HTTP 503\")).toMatchObject({ outage: true });\n+  });"
   }
 ]
