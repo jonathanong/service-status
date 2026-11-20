@@ -23,10 +23,13 @@ codex plugin marketplace add jonathanong/harness-plugins --ref main
 codex plugin add service-status@harness-plugins
 ```
 
+If you already added `harness-plugins` before `service-status` was listed there, run `codex plugin marketplace upgrade harness-plugins` before `codex plugin add` (new users can skip this).
+
 If you added the old `service-status` marketplace, migrate:
 
 ```sh
-# Claude Code (removing a marketplace uninstalls its plugins)
+# Claude Code (removing a marketplace uninstalls its plugins; run
+# `claude plugin list` first and reinstall project-scoped ones with --scope project)
 claude plugin marketplace remove service-status
 claude plugin marketplace add jonathanong/harness-plugins
 claude plugin install service-status@harness-plugins
