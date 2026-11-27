@@ -1,7 +1,7 @@
 # service-status
 
-[![CI](https://github.com/jonathanong/service-status/actions/workflows/ci.yml/badge.svg)](https://github.com/jonathanong/service-status/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/jonathanong/service-status/graph/badge.svg)](https://codecov.io/gh/jonathanong/service-status)
+[![CI](https://github.com/jongleberry/service-status/actions/workflows/ci.yml/badge.svg)](https://github.com/jongleberry/service-status/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/jongleberry/service-status/graph/badge.svg)](https://codecov.io/gh/jongleberry/service-status)
 
 When a `git push`, `gh`, `pnpm install` or API call fails because GitHub, npm or Anthropic is having an incident, coding agents usually treat it as their own bug. They retry in loops, split queries, delete lockfiles and rewrite working code. This plugin helps them recognize the outage, check the provider's status page with one ~200-byte request, and stop.
 
@@ -15,11 +15,11 @@ It has three parts and needs no server:
 
 ```sh
 # Claude Code
-claude plugin marketplace add jonathanong/harness-plugins
+claude plugin marketplace add jongleberry/harness-plugins
 claude plugin install service-status@harness-plugins
 
 # Codex
-codex plugin marketplace add jonathanong/harness-plugins --ref main
+codex plugin marketplace add jongleberry/harness-plugins --ref main
 codex plugin add service-status@harness-plugins
 ```
 
@@ -31,13 +31,13 @@ If you added the old `service-status` marketplace, migrate:
 # Claude Code (removing a marketplace uninstalls its plugins; run
 # `claude plugin list` first and reinstall project-scoped ones with --scope project)
 claude plugin marketplace remove service-status
-claude plugin marketplace add jonathanong/harness-plugins
+claude plugin marketplace add jongleberry/harness-plugins
 claude plugin install service-status@harness-plugins
 
 # Codex (removing a marketplace leaves plugins enabled)
 codex plugin remove service-status@service-status
 codex plugin marketplace remove service-status
-codex plugin marketplace add jonathanong/harness-plugins --ref main
+codex plugin marketplace add jongleberry/harness-plugins --ref main
 codex plugin add service-status@harness-plugins
 ```
 

@@ -5,8 +5,8 @@
   "author": {
     "name": "Jonathan Ong"
   },
-  "homepage": "https://github.com/jonathanong/service-status",
-  "repository": "https://github.com/jonathanong/service-status",
+  "homepage": "https://github.com/jongleberry/service-status",
+  "repository": "https://github.com/jongleberry/service-status",
   "license": "MIT",
   "keywords": ["outage", "status", "statuspage", "incident", "github", "npm", "hooks", "skill"]
 }
