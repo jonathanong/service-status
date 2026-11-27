@@ -5,6 +5,8 @@
 
 When a `git push`, `gh`, `pnpm install` or API call fails because GitHub, npm or Anthropic is having an incident, coding agents usually treat it as their own bug. They retry in loops, split queries, delete lockfiles and rewrite working code. This plugin helps them recognize the outage, check the provider's status page with one ~200-byte request, and stop.
 
+It is part of [ratchet-stack](https://github.com/jongleberry/ratchet-stack), a set of plugins and tools for autonomous coding agents.
+
 It has three parts and needs no server:
 
 - **A skill** (`service-status`). It triggers on outage-shaped failures (5xx, `RPC failed`, `ECONNRESET`, 529 overloaded, release-download timeouts) and stays out of lookalikes (sandbox denials, 401/404, rate limits, mocked 500s in tests). It contains minimal-fetch recipes for every status-page format and [worked scenarios](plugins/service-status/skills/service-status/references/scenarios.md) drawn from real agent sessions.
@@ -24,22 +26,6 @@ codex plugin add service-status@ratchet-stack
 ```
 
 If you already added `ratchet-stack` before `service-status` was listed there, run `codex plugin marketplace upgrade ratchet-stack` before `codex plugin add` (new users can skip this).
-
-If you added the old `service-status` marketplace, migrate:
-
-```sh
-# Claude Code (removing a marketplace uninstalls its plugins; run
-# `claude plugin list` first and reinstall project-scoped ones with --scope project)
-claude plugin marketplace remove service-status
-claude plugin marketplace add jongleberry/ratchet-stack
-claude plugin install service-status@ratchet-stack
-
-# Codex (removing a marketplace leaves plugins enabled)
-codex plugin remove service-status@service-status
-codex plugin marketplace remove service-status
-codex plugin marketplace add jongleberry/ratchet-stack --ref main
-codex plugin add service-status@ratchet-stack
-```
 
 The skill uses `curl` and `jq`, and the hook needs Node 24+. In a sandboxed session, allow the status host for the check. For example, list it in the Bash tool's `allowed_domains`. A sandbox refusal of a status host says nothing about the vendor.
 
@@ -116,7 +102,6 @@ claude plugin eval plugins/service-status --allow-tools Bash --trust-plugin    #
 
 ## Related
 
-- service-status is part of [ratchet-stack](https://github.com/jongleberry/ratchet-stack), a set of plugins and tools for autonomous coding agents.
 - [devops-status-mcp-server](https://github.com/cyanheads/devops-status-mcp-server) and [StatusCraft](https://github.com/jabbawocky/statuscraft) are MCP servers that read status pages on request. They're useful when you want to ask; this plugin targets the case where nobody thinks to ask.
 
 ## License
