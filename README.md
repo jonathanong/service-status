@@ -116,6 +116,7 @@ claude plugin eval plugins/service-status --allow-tools Bash --trust-plugin    #
 
 ## Related
 
+- service-status is part of [ratchet-stack](https://github.com/jongleberry/ratchet-stack), a set of plugins and tools for autonomous coding agents.
 - [devops-status-mcp-server](https://github.com/cyanheads/devops-status-mcp-server) and [StatusCraft](https://github.com/jabbawocky/statuscraft) are MCP servers that read status pages on request. They're useful when you want to ask; this plugin targets the case where nobody thinks to ask.
 
 ## License
