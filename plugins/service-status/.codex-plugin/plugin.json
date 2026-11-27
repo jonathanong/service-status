@@ -6,8 +6,8 @@
     "name": "Jonathan Ong",
     "url": "https://github.com/jonathanong"
   },
-  "homepage": "https://github.com/jonathanong/service-status",
-  "repository": "https://github.com/jonathanong/service-status",
+  "homepage": "https://github.com/jongleberry/service-status",
+  "repository": "https://github.com/jongleberry/service-status",
   "license": "MIT",
   "keywords": ["outage", "status", "statuspage", "incident", "codex"],
   "skills": "./skills/",
@@ -19,9 +19,9 @@
     "developerName": "Jonathan Ong",
     "category": "Coding",
     "capabilities": ["Read"],
-    "websiteURL": "https://github.com/jonathanong/service-status",
-    "privacyPolicyURL": "https://github.com/jonathanong/service-status",
-    "termsOfServiceURL": "https://github.com/jonathanong/service-status",
+    "websiteURL": "https://github.com/jongleberry/service-status",
+    "privacyPolicyURL": "https://github.com/jongleberry/service-status",
+    "termsOfServiceURL": "https://github.com/jongleberry/service-status",
     "defaultPrompt": [
       "Is GitHub down?",
       "Check whether npm is having an incident",
