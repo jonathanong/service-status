@@ -15,15 +15,15 @@ It has three parts and needs no server:
 
 ```sh
 # Claude Code
-claude plugin marketplace add jongleberry/harness-plugins
-claude plugin install service-status@harness-plugins
+claude plugin marketplace add jongleberry/ratchet-stack
+claude plugin install service-status@ratchet-stack
 
 # Codex
-codex plugin marketplace add jongleberry/harness-plugins --ref main
-codex plugin add service-status@harness-plugins
+codex plugin marketplace add jongleberry/ratchet-stack --ref main
+codex plugin add service-status@ratchet-stack
 ```
 
-If you already added `harness-plugins` before `service-status` was listed there, run `codex plugin marketplace upgrade harness-plugins` before `codex plugin add` (new users can skip this).
+If you already added `ratchet-stack` before `service-status` was listed there, run `codex plugin marketplace upgrade ratchet-stack` before `codex plugin add` (new users can skip this).
 
 If you added the old `service-status` marketplace, migrate:
 
@@ -31,14 +31,14 @@ If you added the old `service-status` marketplace, migrate:
 # Claude Code (removing a marketplace uninstalls its plugins; run
 # `claude plugin list` first and reinstall project-scoped ones with --scope project)
 claude plugin marketplace remove service-status
-claude plugin marketplace add jongleberry/harness-plugins
-claude plugin install service-status@harness-plugins
+claude plugin marketplace add jongleberry/ratchet-stack
+claude plugin install service-status@ratchet-stack
 
 # Codex (removing a marketplace leaves plugins enabled)
 codex plugin remove service-status@service-status
 codex plugin marketplace remove service-status
-codex plugin marketplace add jongleberry/harness-plugins --ref main
-codex plugin add service-status@harness-plugins
+codex plugin marketplace add jongleberry/ratchet-stack --ref main
+codex plugin add service-status@ratchet-stack
 ```
 
 The skill uses `curl` and `jq`, and the hook needs Node 24+. In a sandboxed session, allow the status host for the check. For example, list it in the Bash tool's `allowed_domains`. A sandbox refusal of a status host says nothing about the vendor.
